@@ -37,9 +37,8 @@ function CTAButtons() {
 function HeroContent() {
   return (
     <div className="hero-content">
-      <p className="hero-role">режиссёр театра, кино и телевидения</p>
+      <p className="hero-role">режиссёр</p>
       <h1><span>Сергей</span><span>Валиков</span></h1>
-      <p className="hero-statement">Работы о человеке, системе,<br />чуде и тени.</p>
       <CTAButtons />
     </div>
   )
@@ -51,7 +50,7 @@ function HeroOverlay() {
 
 function Hero() {
   return (
-    <section className="hero" id="top" aria-label="Сергей Валиков — режиссёр театра, кино и телевидения">
+    <section className="hero" id="top" aria-label="Сергей Валиков — режиссёр">
       <img className="hero-image" src="/portraits/sergey-valikov-hero.jpg" alt="Портрет режиссёра Сергея Валикова" />
       <HeroOverlay />
       <Header />
@@ -98,7 +97,7 @@ function About() {
       <div className="about-inner">
         <p className="eyebrow">04 / О режиссёре</p>
         <blockquote>«Меня интересует момент, когда привычный порядок даёт трещину — и в ней становится виден человек».</blockquote>
-        <p className="about-copy">Сергей Валиков — режиссёр театра, кино и телевидения. Его художественный язык строится на точности наблюдения, внутреннем ритме и внимании к тому, что обычно остаётся за пределами света.</p>
+        <p className="about-copy">Сергей Валиков — режиссёр. Его художественный язык строится на точности наблюдения, внутреннем ритме и внимании к тому, что обычно остаётся за пределами света.</p>
       </div>
     </section>
   )
@@ -121,7 +120,7 @@ function Contact() {
     <footer className="contact-section" id="contact">
       <p className="eyebrow">06 / Контакты</p>
       <div className="contact-main"><h2>Начать разговор</h2><p className="contact-placeholder">Контактные данные скоро появятся</p></div>
-      <div className="footer-line"><span>Сергей Валиков</span><span>Театр · Кино · Телевидение</span><a href="#top">Наверх ↑</a></div>
+      <div className="footer-line"><span>Сергей Валиков</span><span>Режиссёр</span><a href="#top">Наверх ↑</a></div>
     </footer>
   )
 }

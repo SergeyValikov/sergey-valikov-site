@@ -184,15 +184,6 @@ main { overflow: hidden; }
   font-style: italic;
 }
 
-.hero-statement {
-  margin: clamp(30px, 4vh, 48px) 0 0;
-  color: rgba(232, 229, 222, 0.82);
-  font-family: var(--display);
-  font-size: clamp(18px, 1.55vw, 24px);
-  line-height: 1.42;
-  letter-spacing: 0.01em;
-}
-
 .hero-actions {
   display: flex;
   align-items: center;
@@ -582,8 +573,6 @@ main { overflow: hidden; }
   }
 
   .hero-content h1 span:last-child { margin-left: 0.15em; margin-top: 0.28em; }
-  .hero-statement { margin-top: 24px; font-size: 17px; line-height: 1.34; }
-
   .hero-actions {
     flex-direction: column;
     align-items: stretch;
@@ -637,7 +626,6 @@ main { overflow: hidden; }
   .hero-content { transform: translateY(-35%); }
   .hero-role { margin-bottom: 18px; }
   .hero-content h1 { font-size: min(8.2vw, 110px); }
-  .hero-statement { margin-top: 24px; }
   .hero-actions { margin-top: 28px; }
 }
 
