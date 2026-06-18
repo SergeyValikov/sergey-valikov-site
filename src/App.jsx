@@ -1,122 +1,123 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const navigation = [
+  ['Работы', '#works'],
+  ['Театр', '#theatre'],
+  ['Кино', '#cinema'],
+  ['О режиссёре', '#about'],
+  ['Контакты', '#contact'],
+]
 
+function Header() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <header className="site-header">
+      <a className="monogram" href="#top" aria-label="Сергей Валиков — на главную">
+        <span>S</span>
+        <span>V</span>
+      </a>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      <nav className="site-nav" aria-label="Основная навигация">
+        {navigation.map(([label, href]) => (
+          <a key={href} href={href}>{label}</a>
+        ))}
+      </nav>
+    </header>
   )
+}
+
+function CTAButtons() {
+  return (
+    <div className="hero-actions">
+      <a className="button button-primary" href="#works">
+        Смотреть работы <span aria-hidden="true">↘</span>
+      </a>
+      <a className="button button-secondary" href="#contact">Связаться</a>
+    </div>
+  )
+}
+
+function HeroContent() {
+  return (
+    <div className="hero-content">
+      <p className="hero-role">режиссёр театра и кино</p>
+      <h1><span>Сергей</span><span>Валиков</span></h1>
+      <p className="hero-statement">Работы о человеке, системе,<br />чуде и тени.</p>
+      <CTAButtons />
+    </div>
+  )
+}
+
+function HeroOverlay() {
+  return <div className="hero-overlay" aria-hidden="true" />
+}
+
+function Hero() {
+  return (
+    <section className="hero" id="top" aria-label="Сергей Валиков — режиссёр театра и кино">
+      <img className="hero-image" src="/portraits/sergey-valikov-hero.jpg" alt="Портрет режиссёра Сергея Валикова" />
+      <HeroOverlay />
+      <Header />
+      <HeroContent />
+      <div className="hero-caption" aria-hidden="true"><span>Авторский взгляд</span><span>01</span></div>
+      <a className="scroll-cue" href="#works" aria-label="Перейти к избранным работам"><span />далее</a>
+    </section>
+  )
+}
+
+function Works() {
+  return (
+    <section className="works-section section-shell" id="works">
+      <div className="section-number">01</div>
+      <div className="section-heading">
+        <p className="eyebrow">Избранные работы</p>
+        <h2>Истории, в которых тишина говорит точнее слов.</h2>
+      </div>
+      <p className="section-note">Театр · Кино · Сценическое пространство</p>
+    </section>
+  )
+}
+
+function DirectionSections() {
+  return (
+    <div className="directions">
+      <section className="direction" id="theatre">
+        <p className="eyebrow">02 / Театр</p>
+        <div><h2>Живое напряжение сцены</h2><p>Человек перед системой. Актёр перед тишиной. Зритель перед самим собой.</p></div>
+        <span className="direction-mark" aria-hidden="true">Т</span>
+      </section>
+      <section className="direction" id="cinema">
+        <p className="eyebrow">03 / Кино</p>
+        <div><h2>Взгляд, оставшийся в кадре</h2><p>Кино как память, наблюдение и пространство для невозможного.</p></div>
+        <span className="direction-mark" aria-hidden="true">К</span>
+      </section>
+    </div>
+  )
+}
+
+function About() {
+  return (
+    <section className="about-section" id="about">
+      <div className="about-inner">
+        <p className="eyebrow">04 / О режиссёре</p>
+        <blockquote>«Меня интересует момент, когда привычный порядок даёт трещину — и в ней становится виден человек».</blockquote>
+        <p className="about-copy">Сергей Валиков — режиссёр театра и кино. Его художественный язык строится на точности наблюдения, внутреннем ритме и внимании к тому, что обычно остаётся за пределами света.</p>
+      </div>
+    </section>
+  )
+}
+
+function Contact() {
+  return (
+    <footer className="contact-section" id="contact">
+      <p className="eyebrow">05 / Контакты</p>
+      <div className="contact-main"><h2>Начать разговор</h2><p className="contact-placeholder">Контактные данные скоро появятся</p></div>
+      <div className="footer-line"><span>Сергей Валиков</span><span>Режиссёр театра и кино</span><a href="#top">Наверх ↑</a></div>
+    </footer>
+  )
+}
+
+function App() {
+  return <main><Hero /><Works /><DirectionSections /><About /><Contact /></main>
 }
 
 export default App
