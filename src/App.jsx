@@ -1,11 +1,9 @@
 import './App.css'
 
 const navigation = [
-  ['Работы', '#works'],
-  ['Театр', '#theatre'],
-  ['Кино', '#cinema'],
   ['О режиссёре', '#about'],
   ['Контакты', '#contact'],
+  ['СМИ', '#media'],
 ]
 
 function Header() {
@@ -29,7 +27,7 @@ function CTAButtons() {
   return (
     <div className="hero-actions">
       <a className="button button-primary" href="#works">
-        Смотреть работы <span aria-hidden="true">↘</span>
+        Работы <span aria-hidden="true">↘</span>
       </a>
       <a className="button button-secondary" href="#contact">Связаться</a>
     </div>
@@ -39,7 +37,7 @@ function CTAButtons() {
 function HeroContent() {
   return (
     <div className="hero-content">
-      <p className="hero-role">режиссёр театра и кино</p>
+      <p className="hero-role">режиссёр театра, кино и телевидения</p>
       <h1><span>Сергей</span><span>Валиков</span></h1>
       <p className="hero-statement">Работы о человеке, системе,<br />чуде и тени.</p>
       <CTAButtons />
@@ -53,7 +51,7 @@ function HeroOverlay() {
 
 function Hero() {
   return (
-    <section className="hero" id="top" aria-label="Сергей Валиков — режиссёр театра и кино">
+    <section className="hero" id="top" aria-label="Сергей Валиков — режиссёр театра, кино и телевидения">
       <img className="hero-image" src="/portraits/sergey-valikov-hero.jpg" alt="Портрет режиссёра Сергея Валикова" />
       <HeroOverlay />
       <Header />
@@ -100,7 +98,19 @@ function About() {
       <div className="about-inner">
         <p className="eyebrow">04 / О режиссёре</p>
         <blockquote>«Меня интересует момент, когда привычный порядок даёт трещину — и в ней становится виден человек».</blockquote>
-        <p className="about-copy">Сергей Валиков — режиссёр театра и кино. Его художественный язык строится на точности наблюдения, внутреннем ритме и внимании к тому, что обычно остаётся за пределами света.</p>
+        <p className="about-copy">Сергей Валиков — режиссёр театра, кино и телевидения. Его художественный язык строится на точности наблюдения, внутреннем ритме и внимании к тому, что обычно остаётся за пределами света.</p>
+      </div>
+    </section>
+  )
+}
+
+function Media() {
+  return (
+    <section className="media-section" id="media">
+      <p className="eyebrow">05 / СМИ</p>
+      <div className="media-main">
+        <h2>Публикации и разговоры</h2>
+        <p>Материалы скоро появятся.</p>
       </div>
     </section>
   )
@@ -109,15 +119,15 @@ function About() {
 function Contact() {
   return (
     <footer className="contact-section" id="contact">
-      <p className="eyebrow">05 / Контакты</p>
+      <p className="eyebrow">06 / Контакты</p>
       <div className="contact-main"><h2>Начать разговор</h2><p className="contact-placeholder">Контактные данные скоро появятся</p></div>
-      <div className="footer-line"><span>Сергей Валиков</span><span>Режиссёр театра и кино</span><a href="#top">Наверх ↑</a></div>
+      <div className="footer-line"><span>Сергей Валиков</span><span>Театр · Кино · Телевидение</span><a href="#top">Наверх ↑</a></div>
     </footer>
   )
 }
 
 function App() {
-  return <main><Hero /><Works /><DirectionSections /><About /><Contact /></main>
+  return <main><Hero /><Works /><DirectionSections /><About /><Media /><Contact /></main>
 }
 
 export default App
