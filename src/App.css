@@ -157,11 +157,15 @@ main { overflow: hidden; }
 }
 
 .hero-role {
+  --role-travel: clamp(180px, 22vw, 330px);
+  width: max-content;
   margin-bottom: clamp(24px, 3.2vh, 38px);
   color: rgba(245, 243, 238, 0.9);
   font-size: clamp(12px, 0.9vw, 14px);
   font-weight: 650;
   letter-spacing: 0.27em;
+  will-change: transform;
+  animation: role-glide 7s 1.35s ease-in-out infinite alternate;
 }
 
 .hero-content h1 {
@@ -490,6 +494,11 @@ main { overflow: hidden; }
   to { transform: scale(1.005); }
 }
 
+@keyframes role-glide {
+  from { transform: translateX(0); }
+  to { transform: translateX(var(--role-travel)); }
+}
+
 @media (max-width: 900px) {
   .site-header { padding: 30px 34px; }
   .site-nav { gap: 20px; }
@@ -563,6 +572,7 @@ main { overflow: hidden; }
   }
 
   .hero-role {
+    --role-travel: clamp(95px, 26vw, 130px);
     max-width: 285px;
     margin-bottom: 18px;
     font-size: 9px;
@@ -640,5 +650,10 @@ main { overflow: hidden; }
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .hero-role {
+    animation: none !important;
+    transform: none !important;
   }
 }
