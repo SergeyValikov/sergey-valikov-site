@@ -47,7 +47,8 @@ main { overflow: hidden; }
   object-position: right center;
   filter: grayscale(1) contrast(1.03) brightness(0.76);
   transform: scale(1.005);
-  animation: image-breathe 18s ease-out both;
+  transform-origin: 72% center;
+  animation: image-parallax 26s ease-in-out infinite alternate;
 }
 
 .hero-overlay {
@@ -157,7 +158,7 @@ main { overflow: hidden; }
 }
 
 .hero-role {
-  --role-travel: clamp(180px, 22vw, 330px);
+  --role-travel: clamp(120px, 15vw, 220px);
   width: max-content;
   margin-bottom: clamp(24px, 3.2vh, 38px);
   color: rgba(245, 243, 238, 0.9);
@@ -165,7 +166,7 @@ main { overflow: hidden; }
   font-weight: 650;
   letter-spacing: 0.27em;
   will-change: transform;
-  animation: role-glide 7s 1.35s ease-in-out infinite alternate;
+  animation: role-glide 14s 1.35s linear infinite alternate;
 }
 
 .hero-content h1 {
@@ -489,9 +490,9 @@ main { overflow: hidden; }
   to { opacity: 1; transform: translateY(-43%); }
 }
 
-@keyframes image-breathe {
-  from { transform: scale(1.035); }
-  to { transform: scale(1.005); }
+@keyframes image-parallax {
+  from { transform: scale(1.005); }
+  to { transform: scale(1.055); }
 }
 
 @keyframes role-glide {
@@ -572,7 +573,7 @@ main { overflow: hidden; }
   }
 
   .hero-role {
-    --role-travel: clamp(95px, 26vw, 130px);
+    --role-travel: clamp(55px, 14vw, 72px);
     max-width: 285px;
     margin-bottom: 18px;
     font-size: 9px;
@@ -655,5 +656,10 @@ main { overflow: hidden; }
   .hero-role {
     animation: none !important;
     transform: none !important;
+  }
+
+  .hero-image {
+    animation: none !important;
+    transform: scale(1.005) !important;
   }
 }
