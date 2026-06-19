@@ -37,7 +37,7 @@ function CTAButtons() {
 function HeroContent() {
   return (
     <div className="hero-content">
-      <p className="hero-role">режиссёр</p>
+      <p className="hero-role" data-text="режиссёр">режиссёр</p>
       <h1><span>Сергей</span><span>Валиков</span></h1>
       <CTAButtons />
     </div>
