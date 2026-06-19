@@ -213,6 +213,7 @@ main { overflow: hidden; }
   margin-top: 0.3em;
   font-size: 1em;
   font-style: italic;
+  animation: surname-glow 5s ease-in-out infinite alternate;
 }
 
 .hero-actions {
@@ -537,6 +538,15 @@ main { overflow: hidden; }
   89% { opacity: 0.6; transform: translate(2px, 0); clip-path: inset(68% 0 8% 0); }
 }
 
+@keyframes surname-glow {
+  from {
+    text-shadow: 0 2px 25px rgba(0, 0, 0, 0.18), 0 0 10px rgba(255, 255, 255, 0.14), 0 0 26px rgba(255, 255, 255, 0.06);
+  }
+  to {
+    text-shadow: 0 2px 25px rgba(0, 0, 0, 0.18), 0 0 24px rgba(255, 255, 255, 0.38), 0 0 54px rgba(255, 255, 255, 0.16);
+  }
+}
+
 @media (max-width: 900px) {
   .site-header { padding: 30px 34px; }
   .site-nav { gap: 20px; }
@@ -703,5 +713,10 @@ main { overflow: hidden; }
   .hero-image {
     animation: none !important;
     transform: scale(1.005) !important;
+  }
+
+  .hero-content h1 span:last-child {
+    animation: none !important;
+    text-shadow: 0 2px 25px rgba(0, 0, 0, 0.18), 0 0 18px rgba(255, 255, 255, 0.22), 0 0 38px rgba(255, 255, 255, 0.1);
   }
 }
