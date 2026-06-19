@@ -1,45 +1,136 @@
+import { useEffect, useState } from 'react'
 import './App.css'
 
-const navigation = [
-  ['О режиссёре', '#about'],
-  ['Контакты', '#contact'],
-  ['СМИ', '#media'],
+const navigationTargets = [
+  ['about', '#about'],
+  ['contact', '#contact'],
+  ['media', '#media'],
 ]
 
-function Header() {
+const copy = {
+  ru: {
+    pageTitle: 'Сергей Валиков — режиссёр',
+    homeLabel: 'Сергей Валиков — на главную',
+    navLabel: 'Основная навигация',
+    languageLabel: 'Переключить сайт на английский язык',
+    nav: { about: 'О режиссёре', contact: 'Контакты', media: 'СМИ' },
+    role: 'режиссёр',
+    firstName: 'Сергей',
+    lastName: 'Валиков',
+    portraitAlt: 'Портрет режиссёра Сергея Валикова',
+    heroLabel: 'Сергей Валиков — режиссёр',
+    worksButton: 'Работы',
+    contactButton: 'Связаться',
+    authorView: 'Авторский взгляд',
+    next: 'далее',
+    nextLabel: 'Перейти к избранным работам',
+    worksEyebrow: 'Избранные работы',
+    worksTitle: 'Истории, в которых тишина говорит точнее слов.',
+    worksNote: 'Театр · Кино · Сценическое пространство',
+    theatreEyebrow: '02 / Театр',
+    theatreTitle: 'Живое напряжение сцены',
+    theatreCopy: 'Человек перед системой. Актёр перед тишиной. Зритель перед самим собой.',
+    theatreMark: 'Т',
+    cinemaEyebrow: '03 / Кино',
+    cinemaTitle: 'Взгляд, оставшийся в кадре',
+    cinemaCopy: 'Кино как память, наблюдение и пространство для невозможного.',
+    cinemaMark: 'К',
+    aboutEyebrow: '04 / О режиссёре',
+    aboutQuote: '«Меня интересует момент, когда привычный порядок даёт трещину — и в ней становится виден человек».',
+    aboutCopy: 'Сергей Валиков — режиссёр. Его художественный язык строится на точности наблюдения, внутреннем ритме и внимании к тому, что обычно остаётся за пределами света.',
+    mediaEyebrow: '05 / СМИ',
+    mediaTitle: 'Публикации и разговоры',
+    mediaCopy: 'Материалы скоро появятся.',
+    contactEyebrow: '06 / Контакты',
+    contactTitle: 'Начать разговор',
+    contactCopy: 'Контактные данные скоро появятся',
+    footerName: 'Сергей Валиков',
+    footerRole: 'Режиссёр',
+    backToTop: 'Наверх ↑',
+  },
+  en: {
+    pageTitle: 'Sergey Valikov — Director',
+    homeLabel: 'Sergey Valikov — home',
+    navLabel: 'Main navigation',
+    languageLabel: 'Switch the website to Russian',
+    nav: { about: 'About', contact: 'Contact', media: 'Press' },
+    role: 'director',
+    firstName: 'Sergey',
+    lastName: 'Valikov',
+    portraitAlt: 'Portrait of director Sergey Valikov',
+    heroLabel: 'Sergey Valikov — Director',
+    worksButton: 'Works',
+    contactButton: 'Contact',
+    authorView: "Author's view",
+    next: 'next',
+    nextLabel: 'Go to selected works',
+    worksEyebrow: 'Selected works',
+    worksTitle: 'Stories where silence speaks more precisely than words.',
+    worksNote: 'Theatre · Film · Stage space',
+    theatreEyebrow: '02 / Theatre',
+    theatreTitle: 'The living tension of the stage',
+    theatreCopy: 'A person before the system. An actor before silence. An audience before itself.',
+    theatreMark: 'T',
+    cinemaEyebrow: '03 / Film',
+    cinemaTitle: 'A gaze that remains in the frame',
+    cinemaCopy: 'Film as memory, observation, and a space for the impossible.',
+    cinemaMark: 'F',
+    aboutEyebrow: '04 / About',
+    aboutQuote: '“I am interested in the moment when the familiar order cracks — and a person becomes visible within it.”',
+    aboutCopy: 'Sergey Valikov is a director. His artistic language is built on precise observation, inner rhythm, and attention to what usually remains beyond the light.',
+    mediaEyebrow: '05 / Press',
+    mediaTitle: 'Publications and conversations',
+    mediaCopy: 'Materials coming soon.',
+    contactEyebrow: '06 / Contact',
+    contactTitle: 'Start a conversation',
+    contactCopy: 'Contact details coming soon',
+    footerName: 'Sergey Valikov',
+    footerRole: 'Director',
+    backToTop: 'Back to top ↑',
+  },
+}
+
+function Header({ language, onLanguageChange, t }) {
   return (
     <header className="site-header">
-      <a className="monogram" href="#top" aria-label="Сергей Валиков — на главную">
-        <span>S</span>
-        <span>V</span>
-      </a>
+      <button
+        className="language-switch"
+        type="button"
+        onClick={onLanguageChange}
+        aria-label={t.languageLabel}
+      >
+        {language === 'ru' ? 'ENG' : 'RUS'}
+      </button>
 
-      <nav className="site-nav" aria-label="Основная навигация">
-        {navigation.map(([label, href]) => (
-          <a key={href} href={href}>{label}</a>
+      <nav className="site-nav" aria-label={t.navLabel}>
+        {navigationTargets.map(([key, href]) => (
+          <a key={href} href={href}>{t.nav[key]}</a>
         ))}
       </nav>
     </header>
   )
 }
 
-function CTAButtons() {
+function CTAButtons({ t }) {
   return (
     <div className="hero-actions">
       <a className="button button-primary" href="#works">
-        Работы <span aria-hidden="true">↘</span>
+        {t.worksButton} <span aria-hidden="true">↘</span>
       </a>
-      <a className="button button-secondary" href="#contact">Связаться</a>
+      <a className="button button-secondary" href="#contact">{t.contactButton}</a>
     </div>
   )
 }
 
-function HeroContent() {
+function HeroContent({ t }) {
   return (
     <div className="hero-content">
-      <p className="hero-role" data-text="режиссёр">режиссёр</p>
-      <h1><span>Сергей</span><span>Валиков</span></h1>
-      <CTAButtons />
+      <div className="signature-mark" aria-hidden="true">
+        <img src="/signature.png" alt="" />
+      </div>
+      <p className="hero-role" data-text={t.role}>{t.role}</p>
+      <h1><span>{t.firstName}</span><span>{t.lastName}</span></h1>
+      <CTAButtons t={t} />
     </div>
   )
 }
@@ -48,85 +139,109 @@ function HeroOverlay() {
   return <div className="hero-overlay" aria-hidden="true" />
 }
 
-function Hero() {
+function Hero({ language, onLanguageChange, t }) {
   return (
-    <section className="hero" id="top" aria-label="Сергей Валиков — режиссёр">
-      <img className="hero-image" src="/portraits/sergey-valikov-hero.jpg" alt="Портрет режиссёра Сергея Валикова" />
+    <section className="hero" id="top" aria-label={t.heroLabel}>
+      <img className="hero-image" src="/portraits/sergey-valikov-hero.jpg" alt={t.portraitAlt} />
       <HeroOverlay />
-      <Header />
-      <HeroContent />
-      <div className="hero-caption" aria-hidden="true"><span>Авторский взгляд</span><span>01</span></div>
-      <a className="scroll-cue" href="#works" aria-label="Перейти к избранным работам"><span />далее</a>
+      <Header language={language} onLanguageChange={onLanguageChange} t={t} />
+      <HeroContent t={t} />
+      <div className="hero-caption" aria-hidden="true"><span>{t.authorView}</span><span>01</span></div>
+      <a className="scroll-cue" href="#works" aria-label={t.nextLabel}><span />{t.next}</a>
     </section>
   )
 }
 
-function Works() {
+function Works({ t }) {
   return (
     <section className="works-section section-shell" id="works">
       <div className="section-number">01</div>
       <div className="section-heading">
-        <p className="eyebrow">Избранные работы</p>
-        <h2>Истории, в которых тишина говорит точнее слов.</h2>
+        <p className="eyebrow">{t.worksEyebrow}</p>
+        <h2>{t.worksTitle}</h2>
       </div>
-      <p className="section-note">Театр · Кино · Сценическое пространство</p>
+      <p className="section-note">{t.worksNote}</p>
     </section>
   )
 }
 
-function DirectionSections() {
+function DirectionSections({ t }) {
   return (
     <div className="directions">
       <section className="direction" id="theatre">
-        <p className="eyebrow">02 / Театр</p>
-        <div><h2>Живое напряжение сцены</h2><p>Человек перед системой. Актёр перед тишиной. Зритель перед самим собой.</p></div>
-        <span className="direction-mark" aria-hidden="true">Т</span>
+        <p className="eyebrow">{t.theatreEyebrow}</p>
+        <div><h2>{t.theatreTitle}</h2><p>{t.theatreCopy}</p></div>
+        <span className="direction-mark" aria-hidden="true">{t.theatreMark}</span>
       </section>
       <section className="direction" id="cinema">
-        <p className="eyebrow">03 / Кино</p>
-        <div><h2>Взгляд, оставшийся в кадре</h2><p>Кино как память, наблюдение и пространство для невозможного.</p></div>
-        <span className="direction-mark" aria-hidden="true">К</span>
+        <p className="eyebrow">{t.cinemaEyebrow}</p>
+        <div><h2>{t.cinemaTitle}</h2><p>{t.cinemaCopy}</p></div>
+        <span className="direction-mark" aria-hidden="true">{t.cinemaMark}</span>
       </section>
     </div>
   )
 }
 
-function About() {
+function About({ t }) {
   return (
     <section className="about-section" id="about">
       <div className="about-inner">
-        <p className="eyebrow">04 / О режиссёре</p>
-        <blockquote>«Меня интересует момент, когда привычный порядок даёт трещину — и в ней становится виден человек».</blockquote>
-        <p className="about-copy">Сергей Валиков — режиссёр. Его художественный язык строится на точности наблюдения, внутреннем ритме и внимании к тому, что обычно остаётся за пределами света.</p>
+        <p className="eyebrow">{t.aboutEyebrow}</p>
+        <blockquote>{t.aboutQuote}</blockquote>
+        <p className="about-copy">{t.aboutCopy}</p>
       </div>
     </section>
   )
 }
 
-function Media() {
+function Media({ t }) {
   return (
     <section className="media-section" id="media">
-      <p className="eyebrow">05 / СМИ</p>
+      <p className="eyebrow">{t.mediaEyebrow}</p>
       <div className="media-main">
-        <h2>Публикации и разговоры</h2>
-        <p>Материалы скоро появятся.</p>
+        <h2>{t.mediaTitle}</h2>
+        <p>{t.mediaCopy}</p>
       </div>
     </section>
   )
 }
 
-function Contact() {
+function Contact({ t }) {
   return (
     <footer className="contact-section" id="contact">
-      <p className="eyebrow">06 / Контакты</p>
-      <div className="contact-main"><h2>Начать разговор</h2><p className="contact-placeholder">Контактные данные скоро появятся</p></div>
-      <div className="footer-line"><span>Сергей Валиков</span><span>Режиссёр</span><a href="#top">Наверх ↑</a></div>
+      <p className="eyebrow">{t.contactEyebrow}</p>
+      <div className="contact-main"><h2>{t.contactTitle}</h2><p className="contact-placeholder">{t.contactCopy}</p></div>
+      <div className="footer-line"><span>{t.footerName}</span><span>{t.footerRole}</span><a href="#top">{t.backToTop}</a></div>
     </footer>
   )
 }
 
 function App() {
-  return <main><Hero /><Works /><DirectionSections /><About /><Media /><Contact /></main>
+  const [language, setLanguage] = useState(() => {
+    const requestedLanguage = new URLSearchParams(window.location.search).get('lang')
+    if (requestedLanguage === 'en' || requestedLanguage === 'ru') return requestedLanguage
+    return window.localStorage.getItem('site-language') === 'en' ? 'en' : 'ru'
+  })
+  const t = copy[language]
+
+  useEffect(() => {
+    window.localStorage.setItem('site-language', language)
+    document.documentElement.lang = language
+    document.title = t.pageTitle
+  }, [language, t.pageTitle])
+
+  const toggleLanguage = () => setLanguage((current) => current === 'ru' ? 'en' : 'ru')
+
+  return (
+    <main>
+      <Hero language={language} onLanguageChange={toggleLanguage} t={t} />
+      <Works t={t} />
+      <DirectionSections t={t} />
+      <About t={t} />
+      <Media t={t} />
+      <Contact t={t} />
+    </main>
+  )
 }
 
 export default App
