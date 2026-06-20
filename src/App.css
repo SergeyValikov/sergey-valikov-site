@@ -704,8 +704,8 @@ main { overflow: hidden; }
     min-width: 0;
     height: 44px;
     padding: 0 14px;
-    font-size: 7px;
-    letter-spacing: 0.14em;
+    font-size: 10px;
+    letter-spacing: 0.16em;
   }
 
   .button-primary, .button-secondary { flex: none; }
