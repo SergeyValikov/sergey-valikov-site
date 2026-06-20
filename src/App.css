@@ -597,6 +597,20 @@ main { overflow: hidden; }
   .direction-mark { font-size: min(55vw, 450px); }
 }
 
+@media (min-width: 901px) and (max-aspect-ratio: 6 / 5) {
+  .hero-image {
+    object-position: 15% center;
+  }
+
+  .hero-content {
+    width: min(620px, 46vw);
+  }
+
+  .hero-content h1 {
+    font-size: clamp(80px, 8.6vw, 130px);
+  }
+}
+
 @media (max-width: 640px) {
   .hero::before { inset: 7px; }
 
