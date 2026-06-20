@@ -597,17 +597,18 @@ main { overflow: hidden; }
   .direction-mark { font-size: min(55vw, 450px); }
 }
 
-@media (min-width: 901px) and (max-aspect-ratio: 6 / 5) {
+@media (min-width: 641px) and (max-aspect-ratio: 4 / 3) {
   .hero-image {
-    object-position: 15% center;
+    object-position: left center;
   }
 
   .hero-content {
-    width: min(620px, 46vw);
+    left: clamp(34px, 5vw, 72px);
+    width: min(560px, 44vw);
   }
 
   .hero-content h1 {
-    font-size: clamp(80px, 8.6vw, 130px);
+    font-size: clamp(56px, 7.4vw, 108px);
   }
 }
 
