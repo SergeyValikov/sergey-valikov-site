@@ -768,6 +768,289 @@ main {
   .footer-line span:nth-child(2) { display: none; }
 }
 
+/* A real phone can report a desktop-like layout viewport in Safari.
+   This branch deliberately mirrors the mobile composition without relying on width. */
+html.real-mobile,
+html.real-mobile body,
+html.real-mobile #root {
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+html.real-mobile main {
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+html.real-mobile .hero {
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html.real-mobile .hero::before {
+  top: max(7px, env(safe-area-inset-top, 0px));
+  right: 7px;
+  bottom: max(7px, env(safe-area-inset-bottom, 0px));
+  left: 7px;
+}
+
+html.real-mobile .hero-image {
+  top: -15%;
+  left: -8%;
+  width: 116%;
+  height: 122%;
+  object-position: 72% center;
+  filter: grayscale(1) contrast(1.03) brightness(0.78);
+}
+
+html.real-mobile .hero-overlay {
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.5) 0%, rgba(5, 5, 5, 0.16) 65%, rgba(5, 5, 5, 0.04) 100%),
+    linear-gradient(0deg, rgba(3, 3, 3, 0.88) 0%, rgba(3, 3, 3, 0.2) 46%, rgba(3, 3, 3, 0.06) 100%),
+    radial-gradient(circle at 58% 42%, transparent 34%, rgba(0, 0, 0, 0.22) 100%);
+}
+
+html.real-mobile .site-header {
+  top: env(safe-area-inset-top, 0px);
+  right: 0;
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  padding: 0;
+}
+
+html.real-mobile .language-switch {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  flex: 0 0 auto;
+  padding: 3px 0;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+}
+
+html.real-mobile .site-nav {
+  position: absolute;
+  top: 72px;
+  left: 50%;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 7vw, 32px);
+  transform: translateX(-50%);
+}
+
+html.real-mobile .site-nav a {
+  position: static;
+  padding: 3px 0;
+  white-space: nowrap;
+  font-size: 11.5px;
+  letter-spacing: 0.15em;
+}
+
+html.real-mobile .hero-content {
+  top: auto;
+  right: 24px;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  left: 24px;
+  width: auto;
+  transform: none;
+  animation-name: reveal;
+}
+
+html.real-mobile .signature-mark {
+  top: 28px;
+  right: 0;
+  bottom: auto;
+  left: auto;
+  z-index: 7;
+  width: clamp(100px, 26vw, 120px);
+}
+
+html.real-mobile .hero-role {
+  max-width: 285px;
+  margin-bottom: 18px;
+  margin-left: clamp(30px, 8vw, 38px);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.21em;
+}
+
+html.real-mobile .hero-content h1 {
+  font-size: clamp(46px, 12vw, 54px);
+  line-height: 0.77;
+  letter-spacing: -0.055em;
+}
+
+html.real-mobile .hero-content h1 span:last-child {
+  margin-top: 0.28em;
+  margin-left: 0;
+}
+
+html.real-mobile .hero-actions {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 9px;
+  margin-top: 24px;
+}
+
+html.real-mobile .button {
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  padding: 0 16px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+
+html.real-mobile .button-primary,
+html.real-mobile .button-secondary {
+  flex: none;
+}
+
+html.real-mobile .scroll-cue,
+html.real-mobile .hero-caption {
+  display: none;
+}
+
+html.real-mobile .section-shell {
+  min-height: 70vh;
+  padding: 90px 25px;
+}
+
+html.real-mobile .works-section {
+  display: block;
+}
+
+html.real-mobile .section-number {
+  margin-bottom: 38px;
+}
+
+html.real-mobile .section-heading h2 {
+  margin-top: 42px;
+  font-size: 48px;
+}
+
+html.real-mobile .section-note {
+  margin-top: 80px;
+}
+
+html.real-mobile .directions {
+  grid-template-columns: 1fr;
+}
+
+html.real-mobile .direction {
+  min-height: 68vh;
+  padding: 48px 25px;
+}
+
+html.real-mobile .direction:first-child {
+  border-right: 0;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.2);
+}
+
+html.real-mobile .direction h2 {
+  font-size: 48px;
+}
+
+html.real-mobile .direction div p,
+html.real-mobile .about-copy {
+  font-size: 17px;
+}
+
+html.real-mobile .about-section {
+  padding: 100px 25px;
+}
+
+html.real-mobile .about-inner {
+  display: block;
+}
+
+html.real-mobile .about-inner blockquote {
+  margin-top: 52px;
+  font-size: 40px;
+}
+
+html.real-mobile .about-copy {
+  margin-top: 64px;
+}
+
+html.real-mobile .media-section {
+  min-height: 58vh;
+  display: block;
+  padding: 90px 25px;
+}
+
+html.real-mobile .media-main h2 {
+  margin-top: 52px;
+  font-size: 50px;
+}
+
+html.real-mobile .media-main p {
+  margin-top: 52px;
+}
+
+html.real-mobile .contact-section {
+  min-height: 72vh;
+  padding: 70px 25px 30px;
+}
+
+html.real-mobile .contact-main h2 {
+  font-size: 62px;
+}
+
+html.real-mobile .footer-line {
+  grid-template-columns: 1fr auto;
+  row-gap: 12px;
+  line-height: 1.5;
+}
+
+html.real-mobile .footer-line span:nth-child(2) {
+  display: none;
+}
+
+.mobile-debug {
+  position: fixed;
+  z-index: 1000;
+  right: 8px;
+  bottom: max(8px, env(safe-area-inset-bottom, 0px));
+  left: 8px;
+  max-height: 44vh;
+  overflow: auto;
+  padding: 12px;
+  color: #f2f2f2;
+  background: rgba(0, 0, 0, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.real-mobile-marker {
+  display: block;
+  margin-bottom: 8px;
+  color: #7dff91;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.mobile-debug-row + .mobile-debug-row {
+  margin-top: 2px;
+}
+
+.mobile-debug-row b {
+  color: #bdbdbd;
+}
+
 @media (max-height: 720px) and (min-width: 768px) {
   .hero-content { transform: translateY(-35%); }
   .hero-role { margin-bottom: 18px; }

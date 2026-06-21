@@ -3,6 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>
+      (() => {
+        const build = 'real-mobile-001'
+        const screenMinSide = Math.min(window.screen.width, window.screen.height)
+        const hasTouch = navigator.maxTouchPoints > 0
+        const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches
+        const isHoverNone = window.matchMedia('(hover: none)').matches
+        const isSmallPhysicalScreen = screenMinSide <= 480
+        const isIPhone = /iPhone|iPod/.test(navigator.userAgent)
+        const forceForLocalTest = /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname) &&
+          new URLSearchParams(window.location.search).get('force-real-mobile') === '1'
+        const isRealMobile = forceForLocalTest || isIPhone || (
+          hasTouch && isCoarsePointer && isHoverNone && isSmallPhysicalScreen
+        )
+
+        document.documentElement.dataset.build = build
+        document.documentElement.dataset.layout = isRealMobile
+          ? 'real-mobile'
+          : 'desktop-or-tablet'
+
+        if (isRealMobile) {
+          document.documentElement.classList.add('real-mobile')
+        }
+
+        console.log('REAL MOBILE CHECK', {
+          build,
+          isRealMobile,
+          forceForLocalTest,
+          screenWidth: window.screen.width,
+          screenHeight: window.screen.height,
+          innerWidth: window.innerWidth,
+          clientWidth: document.documentElement.clientWidth,
+          dpr: window.devicePixelRatio,
+          userAgent: navigator.userAgent,
+        })
+      })()
+    </script>
     <meta name="theme-color" content="#0a0a0a" />
     <meta name="description" content="Официальный сайт режиссёра Сергея Валикова." />
     <title>Сергей Валиков — режиссёр</title>

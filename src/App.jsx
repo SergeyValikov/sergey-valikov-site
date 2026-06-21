@@ -7,6 +7,42 @@ const navigationTargets = [
   ['media', '#media'],
 ]
 
+function MobileDebug() {
+  const searchParams = new URLSearchParams(window.location.search)
+  if (searchParams.get('debug') !== '1') return null
+
+  const root = document.documentElement
+  const isRealMobile = root.classList.contains('real-mobile')
+  const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches
+  const isHoverNone = window.matchMedia('(hover: none)').matches
+
+  const rows = [
+    ['BUILD', root.dataset.build || 'unknown'],
+    ['class real-mobile', isRealMobile ? 'yes' : 'no'],
+    ['data-layout', root.dataset.layout || 'unknown'],
+    ['window.innerWidth', window.innerWidth],
+    ['document.documentElement.clientWidth', root.clientWidth],
+    ['screen.width', window.screen.width],
+    ['screen.height', window.screen.height],
+    ['devicePixelRatio', window.devicePixelRatio],
+    ['pointer coarse', isCoarsePointer ? 'yes' : 'no'],
+    ['hover none', isHoverNone ? 'yes' : 'no'],
+    ['maxTouchPoints', navigator.maxTouchPoints],
+    ['userAgent', navigator.userAgent],
+  ]
+
+  return (
+    <aside className="mobile-debug" aria-label="Mobile layout debug information">
+      {isRealMobile && <strong className="real-mobile-marker">REAL MOBILE ACTIVE</strong>}
+      {rows.map(([label, value]) => (
+        <div className="mobile-debug-row" key={label}>
+          <b>{label}:</b> <span>{String(value)}</span>
+        </div>
+      ))}
+    </aside>
+  )
+}
+
 const copy = {
   ru: {
     pageTitle: 'Сергей Валиков — режиссёр',
@@ -233,14 +269,17 @@ function App() {
   const toggleLanguage = () => setLanguage((current) => current === 'ru' ? 'en' : 'ru')
 
   return (
-    <main>
-      <Hero language={language} onLanguageChange={toggleLanguage} t={t} />
-      <Works t={t} />
-      <DirectionSections t={t} />
-      <About t={t} />
-      <Media t={t} />
-      <Contact t={t} />
-    </main>
+    <>
+      <main>
+        <Hero language={language} onLanguageChange={toggleLanguage} t={t} />
+        <Works t={t} />
+        <DirectionSections t={t} />
+        <About t={t} />
+        <Media t={t} />
+        <Contact t={t} />
+      </main>
+      <MobileDebug />
+    </>
   )
 }
 
