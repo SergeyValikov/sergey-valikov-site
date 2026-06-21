@@ -5,12 +5,18 @@
   --display: "Iowan Old Style", "Baskerville", "Times New Roman", serif;
 }
 
-main { overflow: hidden; }
+main {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
 
 .hero {
   position: relative;
   min-height: 100vh;
   min-height: 100svh;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   isolation: isolate;
   overflow: hidden;
   background: #111;
@@ -597,7 +603,7 @@ main { overflow: hidden; }
   .direction-mark { font-size: min(55vw, 450px); }
 }
 
-@media (min-width: 641px) and (max-aspect-ratio: 4 / 3) {
+@media (min-width: 768px) and (max-aspect-ratio: 4 / 3) {
   .hero-image {
     object-position: left center;
   }
@@ -612,8 +618,13 @@ main { overflow: hidden; }
   }
 }
 
-@media (max-width: 640px) {
-  .hero::before { inset: 7px; }
+@media (max-width: 767px) {
+  .hero::before {
+    top: max(7px, env(safe-area-inset-top, 0px));
+    right: 7px;
+    bottom: max(7px, env(safe-area-inset-bottom, 0px));
+    left: 7px;
+  }
 
   .hero-image {
     top: -15%;
@@ -632,6 +643,7 @@ main { overflow: hidden; }
   }
 
   .site-header {
+    top: env(safe-area-inset-top, 0px);
     right: 0;
     width: 100%;
     max-width: 100%;
@@ -641,8 +653,8 @@ main { overflow: hidden; }
 
   .language-switch {
     position: absolute;
-    top: 22px;
-    left: 18px;
+    top: 18px;
+    left: 20px;
     flex: 0 0 auto;
     padding: 3px 0;
     font-size: 12px;
@@ -651,7 +663,7 @@ main { overflow: hidden; }
 
   .site-nav {
     position: absolute;
-    top: 84px;
+    top: 72px;
     left: 50%;
     min-width: 0;
     width: auto;
@@ -659,7 +671,7 @@ main { overflow: hidden; }
     align-items: center;
     justify-content: center;
     max-width: none;
-    gap: 36px;
+    gap: clamp(20px, 7vw, 32px);
     transform: translateX(-50%);
   }
 
@@ -673,27 +685,27 @@ main { overflow: hidden; }
 
   .hero-content {
     top: auto;
-    right: 25px;
-    bottom: 7vh;
-    left: 25px;
+    right: 24px;
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    left: 24px;
     width: auto;
     transform: none;
     animation-name: reveal;
   }
 
   .signature-mark {
-    top: 30px;
-    right: 14px;
+    top: 28px;
+    right: 0;
     bottom: auto;
     left: auto;
     z-index: 7;
-    width: clamp(112px, 29vw, 148px);
+    width: clamp(100px, 26vw, 120px);
   }
 
   .hero-role {
     max-width: 285px;
     margin-bottom: 18px;
-    margin-left: clamp(32px, 9vw, 44px);
+    margin-left: clamp(30px, 8vw, 38px);
     font-size: 13px;
     font-weight: 700;
     line-height: 1.45;
@@ -701,7 +713,7 @@ main { overflow: hidden; }
   }
 
   .hero-content h1 {
-    font-size: clamp(50px, 13vw, 58px);
+    font-size: clamp(46px, 12vw, 54px);
     line-height: 0.77;
     letter-spacing: -0.055em;
   }
@@ -711,14 +723,14 @@ main { overflow: hidden; }
     flex-direction: column;
     align-items: stretch;
     gap: 9px;
-    margin-top: 27px;
+    margin-top: 24px;
   }
 
   .button {
     width: 100%;
     min-width: 0;
-    height: 44px;
-    padding: 0 14px;
+    height: 48px;
+    padding: 0 16px;
     font-size: 10px;
     letter-spacing: 0.16em;
   }
@@ -756,214 +768,7 @@ main { overflow: hidden; }
   .footer-line span:nth-child(2) { display: none; }
 }
 
-@media (min-width: 641px) and (max-aspect-ratio: 3 / 4) {
-/* Safari can ignore the viewport meta tag when "Request Desktop Website" is active.
-   Keep the phone composition proportional to the physical screen in that mode. */
-html.phone-desktop-viewport .hero::before { inset: 1.8vw; }
-
-html.phone-desktop-viewport .hero-image {
-  top: -15%;
-  left: -8%;
-  width: 116%;
-  height: 122%;
-  object-position: 72% center;
-  filter: grayscale(1) contrast(1.03) brightness(0.78);
-}
-
-html.phone-desktop-viewport .hero-overlay {
-  background:
-    linear-gradient(90deg, rgba(5, 5, 5, 0.5) 0%, rgba(5, 5, 5, 0.16) 65%, rgba(5, 5, 5, 0.04) 100%),
-    linear-gradient(0deg, rgba(3, 3, 3, 0.88) 0%, rgba(3, 3, 3, 0.2) 46%, rgba(3, 3, 3, 0.06) 100%),
-    radial-gradient(circle at 58% 42%, transparent 34%, rgba(0, 0, 0, 0.22) 100%);
-}
-
-html.phone-desktop-viewport .site-header {
-  right: 0;
-  width: 100%;
-  max-width: 100%;
-  display: block;
-  padding: 0;
-}
-
-html.phone-desktop-viewport .language-switch {
-  position: absolute;
-  top: 5.6vw;
-  left: 4.6vw;
-  padding: 0.8vw 0;
-  font-size: 3.1vw;
-  letter-spacing: 0.14em;
-}
-
-html.phone-desktop-viewport .site-nav {
-  position: absolute;
-  top: 21.5vw;
-  left: 50%;
-  width: auto;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9.2vw;
-  transform: translateX(-50%);
-}
-
-html.phone-desktop-viewport .site-nav a {
-  position: static;
-  padding: 0.8vw 0;
-  white-space: nowrap;
-  font-size: 3vw;
-  letter-spacing: 0.15em;
-}
-
-html.phone-desktop-viewport .hero-content {
-  top: auto;
-  right: 6.4vw;
-  bottom: 7vh;
-  left: 6.4vw;
-  width: auto;
-  transform: none;
-  animation-name: reveal;
-}
-
-html.phone-desktop-viewport .signature-mark {
-  top: 7.7vw;
-  right: 3.6vw;
-  bottom: auto;
-  left: auto;
-  z-index: 7;
-  width: 29vw;
-}
-
-html.phone-desktop-viewport .hero-role {
-  max-width: 73vw;
-  margin-bottom: 4.6vw;
-  margin-left: 9vw;
-  font-size: 3.33vw;
-  font-weight: 700;
-  line-height: 1.45;
-  letter-spacing: 0.21em;
-}
-
-html.phone-desktop-viewport .hero-content h1 {
-  font-size: 13vw;
-  line-height: 0.77;
-  letter-spacing: -0.055em;
-}
-
-html.phone-desktop-viewport .hero-content h1 span:last-child {
-  margin-left: 0;
-  margin-top: 0.28em;
-}
-
-html.phone-desktop-viewport .hero-actions {
-  flex-direction: column;
-  align-items: stretch;
-  gap: 2.3vw;
-  margin-top: 6.9vw;
-}
-
-html.phone-desktop-viewport .button {
-  width: 100%;
-  min-width: 0;
-  height: 11.3vw;
-  padding: 0 3.6vw;
-  font-size: 2.56vw;
-  letter-spacing: 0.16em;
-}
-
-html.phone-desktop-viewport .button-primary,
-html.phone-desktop-viewport .button-secondary { flex: none; }
-
-html.phone-desktop-viewport .scroll-cue,
-html.phone-desktop-viewport .hero-caption { display: none; }
-
-html.phone-desktop-viewport .section-shell {
-  min-height: 70vh;
-  padding: 23vw 6.4vw;
-}
-
-html.phone-desktop-viewport .eyebrow { font-size: 2.56vw; }
-html.phone-desktop-viewport .works-section { display: block; }
-
-html.phone-desktop-viewport .section-number {
-  margin-bottom: 9.7vw;
-  font-size: 3.85vw;
-}
-
-html.phone-desktop-viewport .section-heading h2 {
-  margin-top: 10.8vw;
-  font-size: 12.3vw;
-}
-
-html.phone-desktop-viewport .section-note {
-  margin-top: 20.5vw;
-  font-size: 2.3vw;
-}
-
-html.phone-desktop-viewport .directions { grid-template-columns: 1fr; }
-
-html.phone-desktop-viewport .direction {
-  min-height: 68vh;
-  padding: 12.3vw 6.4vw;
-}
-
-html.phone-desktop-viewport .direction:first-child {
-  border-right: 0;
-  border-bottom: 1px solid rgba(10, 10, 10, 0.2);
-}
-
-html.phone-desktop-viewport .direction h2 { font-size: 12.3vw; }
-html.phone-desktop-viewport .direction div p { font-size: 4.36vw; }
-html.phone-desktop-viewport .direction-mark { font-size: min(55vw, 450px); }
-
-html.phone-desktop-viewport .about-section { padding: 25.6vw 6.4vw; }
-html.phone-desktop-viewport .about-inner { display: block; }
-
-html.phone-desktop-viewport .about-inner blockquote {
-  margin-top: 13.3vw;
-  font-size: 10.25vw;
-}
-
-html.phone-desktop-viewport .about-copy {
-  margin-top: 16.4vw;
-  font-size: 4.36vw;
-}
-
-html.phone-desktop-viewport .media-section {
-  min-height: 58vh;
-  display: block;
-  padding: 23vw 6.4vw;
-}
-
-html.phone-desktop-viewport .media-main h2 {
-  margin-top: 13.3vw;
-  font-size: 12.8vw;
-}
-
-html.phone-desktop-viewport .media-main p {
-  margin-top: 13.3vw;
-  font-size: 2.3vw;
-}
-
-html.phone-desktop-viewport .contact-section {
-  min-height: 72vh;
-  padding: 17.9vw 6.4vw 7.7vw;
-}
-
-html.phone-desktop-viewport .contact-main h2 { font-size: 15.9vw; }
-html.phone-desktop-viewport .contact-placeholder { font-size: 4.36vw; }
-
-html.phone-desktop-viewport .footer-line {
-  grid-template-columns: 1fr auto;
-  row-gap: 3.1vw;
-  font-size: 2.05vw;
-  line-height: 1.5;
-}
-
-html.phone-desktop-viewport .footer-line span:nth-child(2) { display: none; }
-}
-
-@media (max-height: 720px) and (min-width: 641px) {
+@media (max-height: 720px) and (min-width: 768px) {
   .hero-content { transform: translateY(-35%); }
   .hero-role { margin-bottom: 18px; }
   .hero-content h1 { font-size: min(8.2vw, 110px); }
