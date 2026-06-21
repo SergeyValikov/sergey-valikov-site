@@ -290,6 +290,17 @@ main {
   border-color: transparent;
 }
 
+.button-arrow {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
 .button-primary:hover, .button-primary:focus-visible { background: #fff; }
 
 .button-secondary:hover, .button-secondary:focus-visible {
@@ -632,14 +643,18 @@ main {
     width: 116%;
     height: 122%;
     object-position: 72% center;
-    filter: grayscale(1) contrast(1.03) brightness(0.78);
+    filter: grayscale(1) contrast(1.03) brightness(0.96);
   }
 
   .hero-overlay {
-    background:
-      linear-gradient(90deg, rgba(5, 5, 5, 0.5) 0%, rgba(5, 5, 5, 0.16) 65%, rgba(5, 5, 5, 0.04) 100%),
-      linear-gradient(0deg, rgba(3, 3, 3, 0.88) 0%, rgba(3, 3, 3, 0.2) 46%, rgba(3, 3, 3, 0.06) 100%),
-      radial-gradient(circle at 58% 42%, transparent 34%, rgba(0, 0, 0, 0.22) 100%);
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 56%,
+      rgba(3, 3, 3, 0.08) 64%,
+      rgba(3, 3, 3, 0.62) 80%,
+      rgba(3, 3, 3, 0.94) 100%
+    );
   }
 
   .site-header {
@@ -694,7 +709,7 @@ main {
   }
 
   .signature-mark {
-    top: 28px;
+    top: 45px;
     right: 0;
     bottom: auto;
     left: auto;
@@ -804,14 +819,18 @@ html.real-mobile .hero-image {
   width: 116%;
   height: 122%;
   object-position: 72% center;
-  filter: grayscale(1) contrast(1.03) brightness(0.78);
+  filter: grayscale(1) contrast(1.03) brightness(0.96);
 }
 
 html.real-mobile .hero-overlay {
-  background:
-    linear-gradient(90deg, rgba(5, 5, 5, 0.5) 0%, rgba(5, 5, 5, 0.16) 65%, rgba(5, 5, 5, 0.04) 100%),
-    linear-gradient(0deg, rgba(3, 3, 3, 0.88) 0%, rgba(3, 3, 3, 0.2) 46%, rgba(3, 3, 3, 0.06) 100%),
-    radial-gradient(circle at 58% 42%, transparent 34%, rgba(0, 0, 0, 0.22) 100%);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 56%,
+    rgba(3, 3, 3, 0.08) 64%,
+    rgba(3, 3, 3, 0.62) 80%,
+    rgba(3, 3, 3, 0.94) 100%
+  );
 }
 
 html.real-mobile .site-header {
@@ -866,7 +885,7 @@ html.real-mobile .hero-content {
 }
 
 html.real-mobile .signature-mark {
-  top: 28px;
+  top: 45px;
   right: 0;
   bottom: auto;
   left: auto;

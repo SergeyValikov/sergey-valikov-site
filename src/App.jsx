@@ -151,7 +151,10 @@ function CTAButtons({ t }) {
   return (
     <div className="hero-actions">
       <a className="button button-primary" href="#works">
-        {t.worksButton} <span aria-hidden="true">↘</span>
+        {t.worksButton}
+        <svg className="button-arrow" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M4 4 12 12M7 12H12V7" />
+        </svg>
       </a>
       <a className="button button-secondary" href="#contact">{t.contactButton}</a>
     </div>
