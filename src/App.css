@@ -643,7 +643,6 @@ main {
     width: 116%;
     height: 122%;
     object-position: 72% center;
-    filter: grayscale(1) contrast(1.03) brightness(0.78);
   }
 
   .hero-overlay {
@@ -819,7 +818,6 @@ html.real-mobile .hero-image {
   width: 116%;
   height: 122%;
   object-position: 72% center;
-  filter: grayscale(1) contrast(1.03) brightness(0.78);
 }
 
 html.real-mobile .hero-overlay {
