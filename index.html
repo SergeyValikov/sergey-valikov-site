@@ -1,26 +1,10 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" class="phone-desktop-viewport">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0a0a0a" />
     <meta name="description" content="Официальный сайт режиссёра Сергея Валикова." />
-    <script>
-      (() => {
-        const userAgent = navigator.userAgent
-        const touchDevice = navigator.maxTouchPoints > 0
-        const phoneUserAgent = /iPhone|iPod|Android.*Mobile/i.test(userAgent)
-        const smallTouchScreen = touchDevice && Math.min(screen.width, screen.height) <= 640
-        const desktopViewportOnTouchPortrait = touchDevice
-          && innerWidth > 640
-          && innerWidth <= 1200
-          && innerHeight > innerWidth * 1.2
-
-        if (innerWidth > 640 && (phoneUserAgent || smallTouchScreen || desktopViewportOnTouchPortrait)) {
-          document.documentElement.classList.add('phone-desktop-viewport')
-        }
-      })()
-    </script>
     <title>Сергей Валиков — режиссёр</title>
   </head>
   <body>

@@ -756,6 +756,7 @@ main { overflow: hidden; }
   .footer-line span:nth-child(2) { display: none; }
 }
 
+@media (min-width: 641px) and (max-aspect-ratio: 3 / 4) {
 /* Safari can ignore the viewport meta tag when "Request Desktop Website" is active.
    Keep the phone composition proportional to the physical screen in that mode. */
 html.phone-desktop-viewport .hero::before { inset: 1.8vw; }
@@ -960,6 +961,7 @@ html.phone-desktop-viewport .footer-line {
 }
 
 html.phone-desktop-viewport .footer-line span:nth-child(2) { display: none; }
+}
 
 @media (max-height: 720px) and (min-width: 641px) {
   .hero-content { transform: translateY(-35%); }
