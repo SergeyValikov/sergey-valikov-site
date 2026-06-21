@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <script>
       (() => {
-        const build = 'real-mobile-003'
+        const build = 'real-mobile-004'
         const screenMinSide = Math.min(window.screen.width, window.screen.height)
         const hasTouch = navigator.maxTouchPoints > 0
         const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches
@@ -27,6 +27,28 @@
         if (isRealMobile) {
           document.documentElement.classList.add('real-mobile')
         }
+
+        const resetToHome = () => {
+          if (window.location.hash) {
+            window.history.replaceState(
+              window.history.state,
+              '',
+              `${window.location.pathname}${window.location.search}`,
+            )
+          }
+
+          window.scrollTo(0, 0)
+        }
+
+        if ('scrollRestoration' in window.history) {
+          window.history.scrollRestoration = 'manual'
+        }
+
+        resetToHome()
+        document.addEventListener('DOMContentLoaded', resetToHome, { once: true })
+        window.addEventListener('pageshow', () => {
+          window.requestAnimationFrame(resetToHome)
+        }, { once: true })
 
         console.log('REAL MOBILE CHECK', {
           build,
