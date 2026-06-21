@@ -9,7 +9,26 @@ const navigationTargets = [
 
 function MobileDebug() {
   const searchParams = new URLSearchParams(window.location.search)
-  if (searchParams.get('debug') !== '1') return null
+  const isDebug = searchParams.get('debug') === '1'
+  const [heroStyles, setHeroStyles] = useState({ filter: 'loading', overlay: 'loading' })
+
+  useEffect(() => {
+    if (!isDebug) return undefined
+
+    const frame = window.requestAnimationFrame(() => {
+      const heroImage = document.querySelector('.hero-image')
+      const heroOverlay = document.querySelector('.hero-overlay')
+
+      setHeroStyles({
+        filter: heroImage ? window.getComputedStyle(heroImage).filter : 'missing',
+        overlay: heroOverlay ? window.getComputedStyle(heroOverlay).backgroundImage : 'missing',
+      })
+    })
+
+    return () => window.cancelAnimationFrame(frame)
+  }, [isDebug])
+
+  if (!isDebug) return null
 
   const root = document.documentElement
   const isRealMobile = root.classList.contains('real-mobile')
@@ -28,6 +47,8 @@ function MobileDebug() {
     ['pointer coarse', isCoarsePointer ? 'yes' : 'no'],
     ['hover none', isHoverNone ? 'yes' : 'no'],
     ['maxTouchPoints', navigator.maxTouchPoints],
+    ['hero image filter', heroStyles.filter],
+    ['hero overlay', heroStyles.overlay],
     ['userAgent', navigator.userAgent],
   ]
 

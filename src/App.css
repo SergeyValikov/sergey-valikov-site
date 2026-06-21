@@ -3,6 +3,11 @@
   --ink: #0a0a0a;
   --line: rgba(232, 229, 222, 0.22);
   --display: "Iowan Old Style", "Baskerville", "Times New Roman", serif;
+  --portrait-filter: grayscale(1) contrast(1.03) brightness(0.76);
+  --portrait-overlay:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.78) 0%, rgba(5, 5, 5, 0.5) 31%, rgba(5, 5, 5, 0.08) 61%, rgba(5, 5, 5, 0.08) 100%),
+    linear-gradient(0deg, rgba(3, 3, 3, 0.72) 0%, transparent 34%),
+    radial-gradient(circle at 60% 45%, transparent 38%, rgba(0, 0, 0, 0.38) 100%);
 }
 
 main {
@@ -51,7 +56,7 @@ main {
   max-width: none;
   object-fit: cover;
   object-position: right center;
-  filter: grayscale(1) contrast(1.03) brightness(0.76);
+  filter: var(--portrait-filter);
   transform: scale(1.005);
   transform-origin: 72% center;
   animation: image-parallax 26s ease-in-out infinite alternate;
@@ -61,10 +66,7 @@ main {
   position: absolute;
   z-index: -1;
   inset: 0;
-  background:
-    linear-gradient(90deg, rgba(5, 5, 5, 0.78) 0%, rgba(5, 5, 5, 0.5) 31%, rgba(5, 5, 5, 0.08) 61%, rgba(5, 5, 5, 0.08) 100%),
-    linear-gradient(0deg, rgba(3, 3, 3, 0.72) 0%, transparent 34%),
-    radial-gradient(circle at 60% 45%, transparent 38%, rgba(0, 0, 0, 0.38) 100%);
+  background: var(--portrait-overlay);
 }
 
 .site-header {
@@ -643,17 +645,11 @@ main {
     width: 116%;
     height: 122%;
     object-position: 72% center;
+    filter: var(--portrait-filter) !important;
   }
 
   .hero-overlay {
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      transparent 56%,
-      rgba(3, 3, 3, 0.08) 64%,
-      rgba(3, 3, 3, 0.62) 80%,
-      rgba(3, 3, 3, 0.94) 100%
-    );
+    background: var(--portrait-overlay) !important;
   }
 
   .site-header {
@@ -818,17 +814,11 @@ html.real-mobile .hero-image {
   width: 116%;
   height: 122%;
   object-position: 72% center;
+  filter: var(--portrait-filter) !important;
 }
 
 html.real-mobile .hero-overlay {
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    transparent 56%,
-    rgba(3, 3, 3, 0.08) 64%,
-    rgba(3, 3, 3, 0.62) 80%,
-    rgba(3, 3, 3, 0.94) 100%
-  );
+  background: var(--portrait-overlay) !important;
 }
 
 html.real-mobile .site-header {
