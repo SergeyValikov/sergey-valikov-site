@@ -80,18 +80,13 @@ const copy = {
     contactButton: 'Связаться',
     authorView: 'Авторский взгляд',
     next: 'далее',
-    nextLabel: 'Перейти к избранным работам',
-    worksEyebrow: 'Избранные работы',
-    worksTitle: 'Истории, в которых тишина говорит точнее слов.',
-    worksNote: 'Театр · Кино · Сценическое пространство',
-    theatreEyebrow: '02 / Театр',
-    theatreTitle: 'Живое напряжение сцены',
-    theatreCopy: 'Человек перед системой. Актёр перед тишиной. Зритель перед самим собой.',
-    theatreMark: 'Т',
-    cinemaEyebrow: '03 / Кино',
-    cinemaTitle: 'Взгляд, оставшийся в кадре',
-    cinemaCopy: 'Кино как память, наблюдение и пространство для невозможного.',
-    cinemaMark: 'К',
+    nextLabel: 'Перейти к работам',
+    worksEyebrow: '01 / Работы',
+    worksTitle: 'Работы',
+    worksIntro: 'Кино. Театр. Телевидение. Три пространства режиссёрского взгляда.',
+    worksTabs: { cinema: 'Кино', theatre: 'Театр', television: 'Телевидение' },
+    worksPanelSuffix: { cinema: 'проекты', theatre: 'постановки', television: 'со съёмок' },
+    worksVisualLabel: { cinema: 'Плакат кинопроекта', theatre: 'Плакат спектакля', television: 'Фото со съёмок' },
     aboutEyebrow: '04 / О режиссёре',
     aboutQuote: '«Меня интересует момент, когда привычный порядок даёт трещину — и в ней становится виден человек».',
     aboutCopy: 'Сергей Валиков — режиссёр. Его художественный язык строится на точности наблюдения, внутреннем ритме и внимании к тому, что обычно остаётся за пределами света.',
@@ -120,18 +115,13 @@ const copy = {
     contactButton: 'Contact',
     authorView: "Author's view",
     next: 'next',
-    nextLabel: 'Go to selected works',
-    worksEyebrow: 'Selected works',
-    worksTitle: 'Stories where silence speaks more precisely than words.',
-    worksNote: 'Theatre · Film · Stage space',
-    theatreEyebrow: '02 / Theatre',
-    theatreTitle: 'The living tension of the stage',
-    theatreCopy: 'A person before the system. An actor before silence. An audience before itself.',
-    theatreMark: 'T',
-    cinemaEyebrow: '03 / Film',
-    cinemaTitle: 'A gaze that remains in the frame',
-    cinemaCopy: 'Film as memory, observation, and a space for the impossible.',
-    cinemaMark: 'F',
+    nextLabel: 'Go to works',
+    worksEyebrow: '01 / Works',
+    worksTitle: 'Works',
+    worksIntro: 'Film. Theatre. Television. Three spaces for a director’s gaze.',
+    worksTabs: { cinema: 'Film', theatre: 'Theatre', television: 'Television' },
+    worksPanelSuffix: { cinema: 'projects', theatre: 'productions', television: 'behind the scenes' },
+    worksVisualLabel: { cinema: 'Film project poster', theatre: 'Theatre poster', television: 'Behind-the-scenes photo' },
     aboutEyebrow: '04 / About',
     aboutQuote: '“I am interested in the moment when the familiar order cracks — and a person becomes visible within it.”',
     aboutCopy: 'Sergey Valikov is a director. His artistic language is built on precise observation, inner rhythm, and attention to what usually remains beyond the light.',
@@ -213,32 +203,64 @@ function Hero({ language, onLanguageChange, t }) {
 }
 
 function Works({ t }) {
-  return (
-    <section className="works-section section-shell" id="works">
-      <div className="section-number">01</div>
-      <div className="section-heading">
-        <p className="eyebrow">{t.worksEyebrow}</p>
-        <h2>{t.worksTitle}</h2>
-      </div>
-      <p className="section-note">{t.worksNote}</p>
-    </section>
-  )
-}
+  const categories = ['cinema', 'theatre', 'television']
+  const [activeCategory, setActiveCategory] = useState('cinema')
 
-function DirectionSections({ t }) {
   return (
-    <div className="directions">
-      <section className="direction" id="theatre">
-        <p className="eyebrow">{t.theatreEyebrow}</p>
-        <div><h2>{t.theatreTitle}</h2><p>{t.theatreCopy}</p></div>
-        <span className="direction-mark" aria-hidden="true">{t.theatreMark}</span>
-      </section>
-      <section className="direction" id="cinema">
-        <p className="eyebrow">{t.cinemaEyebrow}</p>
-        <div><h2>{t.cinemaTitle}</h2><p>{t.cinemaCopy}</p></div>
-        <span className="direction-mark" aria-hidden="true">{t.cinemaMark}</span>
-      </section>
-    </div>
+    <section className="works-section" id="works">
+      <div className="works-heading">
+        <div>
+          <p className="eyebrow">{t.worksEyebrow}</p>
+          <h2>{t.worksTitle}</h2>
+        </div>
+        <p className="works-intro">{t.worksIntro}</p>
+      </div>
+
+      <div className="works-tabs" role="tablist" aria-label={t.worksTitle}>
+        {categories.map((category, index) => (
+          <button
+            className={`works-tab${activeCategory === category ? ' is-active' : ''}`}
+            id={`works-tab-${category}`}
+            key={category}
+            type="button"
+            role="tab"
+            aria-controls="works-panel"
+            aria-selected={activeCategory === category}
+            onClick={() => setActiveCategory(category)}
+          >
+            <span>{t.worksTabs[category]}</span>
+            <i>{String(index + 1).padStart(2, '0')}</i>
+          </button>
+        ))}
+      </div>
+
+      <div
+        className={`works-panel works-panel--${activeCategory}`}
+        id="works-panel"
+        role="tabpanel"
+        aria-labelledby={`works-tab-${activeCategory}`}
+        key={activeCategory}
+      >
+        <div className="works-panel-heading">
+          <h3>{t.worksTabs[activeCategory]} / {t.worksPanelSuffix[activeCategory]}</h3>
+          <span>01—03</span>
+        </div>
+
+        <div className="works-grid">
+          {[1, 2, 3].map((item) => (
+            <article className="work-item" key={`${activeCategory}-${item}`}>
+              <div
+                className={`work-visual work-visual--${activeCategory}-${item}`}
+                role="img"
+                aria-label={`${t.worksVisualLabel[activeCategory]} ${item}`}
+              >
+                <span aria-hidden="true">{String(item).padStart(2, '0')}</span>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -297,7 +319,6 @@ function App() {
       <main>
         <Hero language={language} onLanguageChange={toggleLanguage} t={t} />
         <Works t={t} />
-        <DirectionSections t={t} />
         <About t={t} />
         <Media t={t} />
         <Contact t={t} />
