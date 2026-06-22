@@ -83,10 +83,10 @@ const copy = {
     nextLabel: 'Перейти к работам',
     worksEyebrow: '01 / Работы',
     worksTitle: 'Работы',
-    worksIntro: 'Кино. Театр. Телевидение. Три пространства режиссёрского взгляда.',
     worksTabs: { cinema: 'Кино', theatre: 'Театр', television: 'Телевидение' },
-    worksPanelSuffix: { cinema: 'проекты', theatre: 'постановки', television: 'со съёмок' },
+    worksPanelSuffix: { cinema: 'проекты', theatre: 'постановки', television: 'фото со съёмок' },
     worksVisualLabel: { cinema: 'Плакат кинопроекта', theatre: 'Плакат спектакля', television: 'Фото со съёмок' },
+    worksPreviewLabel: { cinema: 'Кадры или трейлер кинопроекта', theatre: 'Фото или видеозапись спектакля' },
     aboutEyebrow: '04 / О режиссёре',
     aboutQuote: '«Меня интересует момент, когда привычный порядок даёт трещину — и в ней становится виден человек».',
     aboutCopy: 'Сергей Валиков — режиссёр. Его художественный язык строится на точности наблюдения, внутреннем ритме и внимании к тому, что обычно остаётся за пределами света.',
@@ -118,10 +118,10 @@ const copy = {
     nextLabel: 'Go to works',
     worksEyebrow: '01 / Works',
     worksTitle: 'Works',
-    worksIntro: 'Film. Theatre. Television. Three spaces for a director’s gaze.',
     worksTabs: { cinema: 'Film', theatre: 'Theatre', television: 'Television' },
-    worksPanelSuffix: { cinema: 'projects', theatre: 'productions', television: 'behind the scenes' },
+    worksPanelSuffix: { cinema: 'projects', theatre: 'productions', television: 'behind-the-scenes photos' },
     worksVisualLabel: { cinema: 'Film project poster', theatre: 'Theatre poster', television: 'Behind-the-scenes photo' },
+    worksPreviewLabel: { cinema: 'Film stills or trailer', theatre: 'Production photos or video' },
     aboutEyebrow: '04 / About',
     aboutQuote: '“I am interested in the moment when the familiar order cracks — and a person becomes visible within it.”',
     aboutCopy: 'Sergey Valikov is a director. His artistic language is built on precise observation, inner rhythm, and attention to what usually remains beyond the light.',
@@ -209,11 +209,8 @@ function Works({ t }) {
   return (
     <section className="works-section" id="works">
       <div className="works-heading">
-        <div>
-          <p className="eyebrow">{t.worksEyebrow}</p>
-          <h2>{t.worksTitle}</h2>
-        </div>
-        <p className="works-intro">{t.worksIntro}</p>
+        <p className="eyebrow">{t.worksEyebrow}</p>
+        <h2>{t.worksTitle}</h2>
       </div>
 
       <div className="works-tabs" role="tablist" aria-label={t.worksTitle}>
@@ -246,9 +243,12 @@ function Works({ t }) {
           <span>01—03</span>
         </div>
 
-        <div className="works-grid">
+        <div className={`works-grid works-grid--${activeCategory === 'television' ? 'gallery' : 'paired'}`}>
           {[1, 2, 3].map((item) => (
-            <article className="work-item" key={`${activeCategory}-${item}`}>
+            <article
+              className={`work-item${activeCategory === 'television' ? '' : ' work-item--paired'}`}
+              key={`${activeCategory}-${item}`}
+            >
               <div
                 className={`work-visual work-visual--${activeCategory}-${item}`}
                 role="img"
@@ -256,6 +256,19 @@ function Works({ t }) {
               >
                 <span aria-hidden="true">{String(item).padStart(2, '0')}</span>
               </div>
+              {activeCategory !== 'television' && (
+                <div
+                  className={`work-preview work-preview--${activeCategory}-${item}`}
+                  role="img"
+                  aria-label={`${t.worksPreviewLabel[activeCategory]} ${item}`}
+                >
+                  {item === 1 && (
+                    <span className="work-play" aria-hidden="true">
+                      <svg viewBox="0 0 24 24"><path d="M9 6.5 17 12l-8 5.5z" /></svg>
+                    </span>
+                  )}
+                </div>
+              )}
             </article>
           ))}
         </div>
