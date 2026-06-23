@@ -7,6 +7,17 @@ const navigationTargets = [
   ['media', '#media'],
 ]
 
+const cinemaProjects = [
+  {
+    title: 'CONDUCTOR',
+    banner: '/works/conductor-banner.jpg',
+    bannerAlt: 'Баннер фильма CONDUCTOR',
+    trailer: '/works/conductor-trailer.mp4',
+    trailerPoster: '/works/conductor-trailer-poster.jpg',
+    imdbUrl: 'https://www.imdb.com/title/tt39178320/?ref_=fn_t_10',
+  },
+]
+
 function MobileDebug() {
   const searchParams = new URLSearchParams(window.location.search)
   const isDebug = searchParams.get('debug') === '1'
@@ -87,6 +98,8 @@ const copy = {
     worksPanelSuffix: { cinema: 'проекты', theatre: 'постановки', television: 'фото со съёмок' },
     worksVisualLabel: { cinema: 'Плакат кинопроекта', theatre: 'Плакат спектакля', television: 'Фото со съёмок' },
     worksPreviewLabel: { cinema: 'Кадры или трейлер кинопроекта', theatre: 'Фото или видеозапись спектакля' },
+    openProjectImdb: 'Открыть проект в IMDb',
+    trailerLabel: 'Трейлер',
     aboutEyebrow: '04 / О режиссёре',
     aboutQuote: '«Меня интересует момент, когда привычный порядок даёт трещину — и в ней становится виден человек».',
     aboutCopy: 'Сергей Валиков — режиссёр. Его художественный язык строится на точности наблюдения, внутреннем ритме и внимании к тому, что обычно остаётся за пределами света.',
@@ -122,6 +135,8 @@ const copy = {
     worksPanelSuffix: { cinema: 'projects', theatre: 'productions', television: 'behind-the-scenes photos' },
     worksVisualLabel: { cinema: 'Film project poster', theatre: 'Theatre poster', television: 'Behind-the-scenes photo' },
     worksPreviewLabel: { cinema: 'Film stills or trailer', theatre: 'Production photos or video' },
+    openProjectImdb: 'Open project on IMDb',
+    trailerLabel: 'Trailer',
     aboutEyebrow: '04 / About',
     aboutQuote: '“I am interested in the moment when the familiar order cracks — and a person becomes visible within it.”',
     aboutCopy: 'Sergey Valikov is a director. His artistic language is built on precise observation, inner rhythm, and attention to what usually remains beyond the light.',
@@ -202,9 +217,91 @@ function Hero({ language, onLanguageChange, t }) {
   )
 }
 
+function formatCountRange(count) {
+  return `01—${String(count).padStart(2, '0')}`
+}
+
+function CinemaProjects({ t }) {
+  return (
+    <div className="cinema-projects">
+      {cinemaProjects.map((project, index) => (
+        <article className="film-project" key={project.title}>
+          <div className="project-heading">
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h4>{project.title}</h4>
+          </div>
+
+          <div className="project-banner">
+            <img src={project.banner} alt={project.bannerAlt} loading="lazy" />
+          </div>
+
+          <div className="project-links">
+            <p>{project.title} / IMDb</p>
+            <a className="imdb-link" href={project.imdbUrl} target="_blank" rel="noreferrer">
+              <img src="/works/imdb-logo.webp" alt="" />
+              <span>{t.openProjectImdb}</span>
+            </a>
+          </div>
+
+          <div className="project-trailer">
+            <div className="project-video-frame">
+              <video
+                src={project.trailer}
+                poster={project.trailerPoster}
+                preload="metadata"
+                controls
+                playsInline
+                aria-label={`${project.title} — ${t.trailerLabel}`}
+              />
+            </div>
+            <div className="project-trailer-label">
+              <p>{t.trailerLabel}</p>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  )
+}
+
+function PlaceholderWorks({ activeCategory, t }) {
+  return (
+    <div className={`works-grid works-grid--${activeCategory === 'television' ? 'gallery' : 'paired'}`}>
+      {[1, 2, 3].map((item) => (
+        <article
+          className={`work-item${activeCategory === 'television' ? '' : ' work-item--paired'}`}
+          key={`${activeCategory}-${item}`}
+        >
+          <div
+            className={`work-visual work-visual--${activeCategory}-${item}`}
+            role="img"
+            aria-label={`${t.worksVisualLabel[activeCategory]} ${item}`}
+          >
+            <span aria-hidden="true">{String(item).padStart(2, '0')}</span>
+          </div>
+          {activeCategory !== 'television' && (
+            <div
+              className={`work-preview work-preview--${activeCategory}-${item}`}
+              role="img"
+              aria-label={`${t.worksPreviewLabel[activeCategory]} ${item}`}
+            >
+              {item === 1 && (
+                <span className="work-play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M9 6.5 17 12l-8 5.5z" /></svg>
+                </span>
+              )}
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  )
+}
+
 function Works({ t }) {
   const categories = ['cinema', 'theatre', 'television']
   const [activeCategory, setActiveCategory] = useState('cinema')
+  const activeCount = activeCategory === 'cinema' ? cinemaProjects.length : 3
 
   return (
     <section className="works-section" id="works">
@@ -240,38 +337,12 @@ function Works({ t }) {
       >
         <div className="works-panel-heading">
           <h3>{t.worksTabs[activeCategory]} / {t.worksPanelSuffix[activeCategory]}</h3>
-          <span>01—03</span>
+          <span>{formatCountRange(activeCount)}</span>
         </div>
 
-        <div className={`works-grid works-grid--${activeCategory === 'television' ? 'gallery' : 'paired'}`}>
-          {[1, 2, 3].map((item) => (
-            <article
-              className={`work-item${activeCategory === 'television' ? '' : ' work-item--paired'}`}
-              key={`${activeCategory}-${item}`}
-            >
-              <div
-                className={`work-visual work-visual--${activeCategory}-${item}`}
-                role="img"
-                aria-label={`${t.worksVisualLabel[activeCategory]} ${item}`}
-              >
-                <span aria-hidden="true">{String(item).padStart(2, '0')}</span>
-              </div>
-              {activeCategory !== 'television' && (
-                <div
-                  className={`work-preview work-preview--${activeCategory}-${item}`}
-                  role="img"
-                  aria-label={`${t.worksPreviewLabel[activeCategory]} ${item}`}
-                >
-                  {item === 1 && (
-                    <span className="work-play" aria-hidden="true">
-                      <svg viewBox="0 0 24 24"><path d="M9 6.5 17 12l-8 5.5z" /></svg>
-                    </span>
-                  )}
-                </div>
-              )}
-            </article>
-          ))}
-        </div>
+        {activeCategory === 'cinema'
+          ? <CinemaProjects t={t} />
+          : <PlaceholderWorks activeCategory={activeCategory} t={t} />}
       </div>
     </section>
   )
