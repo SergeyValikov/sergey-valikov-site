@@ -595,6 +595,31 @@ main {
   background: rgba(0, 0, 0, 0.68);
 }
 
+.theatre-projects {
+  display: block;
+}
+
+.theatre-project + .theatre-project {
+  margin-top: clamp(62px, 7vw, 110px);
+  padding-top: clamp(46px, 5vw, 76px);
+  border-top: 1px solid var(--line);
+}
+
+.theatre-project-body {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.62fr) minmax(0, 1.28fr);
+  gap: clamp(18px, 2.8vw, 44px);
+  align-items: start;
+}
+
+.theatre-trailer {
+  margin-top: 0;
+}
+
+.theatre-trailer .project-video-frame {
+  aspect-ratio: 16 / 9;
+}
+
 .project-coming {
   display: grid;
   grid-template-columns: minmax(220px, 0.64fr) minmax(0, 1fr);
@@ -1187,6 +1212,10 @@ main {
   .imdb-link img {
     width: 58px;
   }
+  .theatre-project-body {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
   .project-coming {
     grid-template-columns: 1fr;
     gap: 18px;
@@ -1478,6 +1507,11 @@ html.real-mobile .imdb-link {
 
 html.real-mobile .imdb-link img {
   width: 58px;
+}
+
+html.real-mobile .theatre-project-body {
+  grid-template-columns: 1fr;
+  gap: 18px;
 }
 
 html.real-mobile .project-coming {

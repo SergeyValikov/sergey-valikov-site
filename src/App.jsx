@@ -23,6 +23,16 @@ const cinemaProjects = [
   },
 ]
 
+const theatreProjects = [
+  {
+    title: 'СТЕКЛЯННЫЙ ЗВЕРИНЕЦ',
+    poster: '/works/glass-menagerie-poster.jpg',
+    posterAlt: 'Афиша спектакля Стеклянный зверинец',
+    trailer: '/works/glass-menagerie-trailer.mp4',
+    trailerPoster: '/works/glass-menagerie-trailer-poster.jpg',
+  },
+]
+
 function MobileDebug() {
   const searchParams = new URLSearchParams(window.location.search)
   const isDebug = searchParams.get('debug') === '1'
@@ -287,6 +297,43 @@ function CinemaProjects({ t }) {
   )
 }
 
+function TheatreProjects({ t }) {
+  return (
+    <div className="theatre-projects">
+      {theatreProjects.map((project, index) => (
+        <article className="theatre-project" key={project.title}>
+          <div className="project-heading">
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h4>{project.title}</h4>
+          </div>
+
+          <div className="theatre-project-body">
+            <div className="project-poster">
+              <img src={project.poster} alt={project.posterAlt} loading="lazy" />
+            </div>
+
+            <div className="project-trailer theatre-trailer">
+              <div className="project-video-frame">
+                <video
+                  src={project.trailer}
+                  poster={project.trailerPoster}
+                  preload="metadata"
+                  controls
+                  playsInline
+                  aria-label={`${project.title} — ${t.trailerLabel}`}
+                />
+              </div>
+              <div className="project-trailer-label">
+                <p>{t.trailerLabel}</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  )
+}
+
 function PlaceholderWorks({ activeCategory, t }) {
   return (
     <div className={`works-grid works-grid--${activeCategory === 'television' ? 'gallery' : 'paired'}`}>
@@ -324,7 +371,11 @@ function PlaceholderWorks({ activeCategory, t }) {
 function Works({ t }) {
   const categories = ['cinema', 'theatre', 'television']
   const [activeCategory, setActiveCategory] = useState('cinema')
-  const activeCount = activeCategory === 'cinema' ? cinemaProjects.length : 3
+  const activeCount = activeCategory === 'cinema'
+    ? cinemaProjects.length
+    : activeCategory === 'theatre'
+      ? theatreProjects.length
+      : 3
 
   return (
     <section className="works-section" id="works">
@@ -363,9 +414,9 @@ function Works({ t }) {
           <span>{formatCountRange(activeCount)}</span>
         </div>
 
-        {activeCategory === 'cinema'
-          ? <CinemaProjects t={t} />
-          : <PlaceholderWorks activeCategory={activeCategory} t={t} />}
+        {activeCategory === 'cinema' && <CinemaProjects t={t} />}
+        {activeCategory === 'theatre' && <TheatreProjects t={t} />}
+        {activeCategory === 'television' && <PlaceholderWorks activeCategory={activeCategory} t={t} />}
       </div>
     </section>
   )
