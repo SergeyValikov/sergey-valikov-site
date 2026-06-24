@@ -3,7 +3,6 @@ import './App.css'
 
 const navigationTargets = [
   ['about', '#about'],
-  ['contact', '#contact'],
   ['media', '#media'],
 ]
 
@@ -15,6 +14,12 @@ const cinemaProjects = [
     trailer: '/works/conductor-trailer.mp4',
     trailerPoster: '/works/conductor-trailer-poster.jpg',
     imdbUrl: 'https://www.imdb.com/title/tt39178320/?ref_=fn_t_10',
+  },
+  {
+    title: '13:7',
+    poster: '/works/13-7-poster.jpg',
+    posterAlt: 'Постер фильма 13:7',
+    status: 'coming-soon',
   },
 ]
 
@@ -100,6 +105,7 @@ const copy = {
     worksPreviewLabel: { cinema: 'Кадры или трейлер кинопроекта', theatre: 'Фото или видеозапись спектакля' },
     openProjectImdb: 'Открыть проект в IMDb',
     trailerLabel: 'Трейлер',
+    comingSoon: 'Скоро',
     aboutEyebrow: '04 / О режиссёре',
     aboutQuote: '«Меня интересует момент, когда привычный порядок даёт трещину — и в ней становится виден человек».',
     aboutCopy: 'Сергей Валиков — режиссёр. Его художественный язык строится на точности наблюдения, внутреннем ритме и внимании к тому, что обычно остаётся за пределами света.',
@@ -137,6 +143,7 @@ const copy = {
     worksPreviewLabel: { cinema: 'Film stills or trailer', theatre: 'Production photos or video' },
     openProjectImdb: 'Open project on IMDb',
     trailerLabel: 'Trailer',
+    comingSoon: 'Soon',
     aboutEyebrow: '04 / About',
     aboutQuote: '“I am interested in the moment when the familiar order cracks — and a person becomes visible within it.”',
     aboutCopy: 'Sergey Valikov is a director. His artistic language is built on precise observation, inner rhythm, and attention to what usually remains beyond the light.',
@@ -225,39 +232,55 @@ function CinemaProjects({ t }) {
   return (
     <div className="cinema-projects">
       {cinemaProjects.map((project, index) => (
-        <article className="film-project" key={project.title}>
+        <article
+          className={`film-project${project.status === 'coming-soon' ? ' film-project--coming' : ''}`}
+          key={project.title}
+        >
           <div className="project-heading">
             <span>{String(index + 1).padStart(2, '0')}</span>
             <h4>{project.title}</h4>
           </div>
 
-          <div className="project-banner">
-            <img src={project.banner} alt={project.bannerAlt} loading="lazy" />
-          </div>
-
-          <div className="project-links">
-            <p>{project.title} / IMDb</p>
-            <a className="imdb-link" href={project.imdbUrl} target="_blank" rel="noreferrer">
-              <img src="/works/imdb-logo.webp" alt="" />
-              <span>{t.openProjectImdb}</span>
-            </a>
-          </div>
-
-          <div className="project-trailer">
-            <div className="project-video-frame">
-              <video
-                src={project.trailer}
-                poster={project.trailerPoster}
-                preload="metadata"
-                controls
-                playsInline
-                aria-label={`${project.title} — ${t.trailerLabel}`}
-              />
+          {project.status === 'coming-soon' ? (
+            <div className="project-coming">
+              <div className="project-poster">
+                <img src={project.poster} alt={project.posterAlt} loading="lazy" />
+              </div>
+              <div className="project-soon" aria-label={`${project.title} — ${t.comingSoon}`}>
+                <span>{t.comingSoon}</span>
+              </div>
             </div>
-            <div className="project-trailer-label">
-              <p>{t.trailerLabel}</p>
-            </div>
-          </div>
+          ) : (
+            <>
+              <div className="project-banner">
+                <img src={project.banner} alt={project.bannerAlt} loading="lazy" />
+              </div>
+
+              <div className="project-links">
+                <p>{project.title} / IMDb</p>
+                <a className="imdb-link" href={project.imdbUrl} target="_blank" rel="noreferrer">
+                  <img src="/works/imdb-logo.webp" alt="" />
+                  <span>{t.openProjectImdb}</span>
+                </a>
+              </div>
+
+              <div className="project-trailer">
+                <div className="project-video-frame">
+                  <video
+                    src={project.trailer}
+                    poster={project.trailerPoster}
+                    preload="metadata"
+                    controls
+                    playsInline
+                    aria-label={`${project.title} — ${t.trailerLabel}`}
+                  />
+                </div>
+                <div className="project-trailer-label">
+                  <p>{t.trailerLabel}</p>
+                </div>
+              </div>
+            </>
+          )}
         </article>
       ))}
     </div>
