@@ -25,13 +25,21 @@ const cinemaProjects = [
 
 const theatreProjects = [
   {
-    title: 'СТЕКЛЯННЫЙ ЗВЕРИНЕЦ',
+    title: {
+      ru: 'СТЕКЛЯННЫЙ ЗВЕРИНЕЦ',
+      en: 'THE GLASS MENAGERIE',
+    },
     poster: '/works/glass-menagerie-poster.jpg',
     posterAlt: 'Афиша спектакля Стеклянный зверинец',
     trailer: '/works/glass-menagerie-trailer.mp4',
     trailerPoster: '/works/glass-menagerie-trailer-poster.jpg',
   },
 ]
+
+function getLocalizedText(value, language) {
+  if (typeof value === 'string') return value
+  return value[language] ?? value.ru ?? ''
+}
 
 function MobileDebug() {
   const searchParams = new URLSearchParams(window.location.search)
@@ -297,39 +305,43 @@ function CinemaProjects({ t }) {
   )
 }
 
-function TheatreProjects({ t }) {
+function TheatreProjects({ language, t }) {
   return (
     <div className="theatre-projects">
-      {theatreProjects.map((project, index) => (
-        <article className="theatre-project" key={project.title}>
-          <div className="project-heading">
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <h4>{project.title}</h4>
-          </div>
+      {theatreProjects.map((project, index) => {
+        const projectTitle = getLocalizedText(project.title, language)
 
-          <div className="theatre-project-body">
-            <div className="project-poster">
-              <img src={project.poster} alt={project.posterAlt} loading="lazy" />
+        return (
+          <article className="theatre-project" key={project.title.ru}>
+            <div className="project-heading">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h4>{projectTitle}</h4>
             </div>
 
-            <div className="project-trailer theatre-trailer">
-              <div className="project-video-frame">
-                <video
-                  src={project.trailer}
-                  poster={project.trailerPoster}
-                  preload="metadata"
-                  controls
-                  playsInline
-                  aria-label={`${project.title} — ${t.trailerLabel}`}
-                />
+            <div className="theatre-project-body">
+              <div className="project-poster">
+                <img src={project.poster} alt={project.posterAlt} loading="lazy" />
               </div>
-              <div className="project-trailer-label">
-                <p>{t.trailerLabel}</p>
+
+              <div className="project-trailer theatre-trailer">
+                <div className="project-video-frame">
+                  <video
+                    src={project.trailer}
+                    poster={project.trailerPoster}
+                    preload="metadata"
+                    controls
+                    playsInline
+                    aria-label={`${projectTitle} — ${t.trailerLabel}`}
+                  />
+                </div>
+                <div className="project-trailer-label">
+                  <p>{t.trailerLabel}</p>
+                </div>
               </div>
             </div>
-          </div>
-        </article>
-      ))}
+          </article>
+        )
+      })}
     </div>
   )
 }
@@ -368,7 +380,7 @@ function PlaceholderWorks({ activeCategory, t }) {
   )
 }
 
-function Works({ t }) {
+function Works({ language, t }) {
   const categories = ['cinema', 'theatre', 'television']
   const [activeCategory, setActiveCategory] = useState('cinema')
   const activeCount = activeCategory === 'cinema'
@@ -415,7 +427,7 @@ function Works({ t }) {
         </div>
 
         {activeCategory === 'cinema' && <CinemaProjects t={t} />}
-        {activeCategory === 'theatre' && <TheatreProjects t={t} />}
+        {activeCategory === 'theatre' && <TheatreProjects language={language} t={t} />}
         {activeCategory === 'television' && <PlaceholderWorks activeCategory={activeCategory} t={t} />}
       </div>
     </section>
@@ -476,7 +488,7 @@ function App() {
     <>
       <main>
         <Hero language={language} onLanguageChange={toggleLanguage} t={t} />
-        <Works t={t} />
+        <Works language={language} t={t} />
         <About t={t} />
         <Media t={t} />
         <Contact t={t} />
