@@ -138,12 +138,24 @@ const copy = {
         description: 'заслуженный артист РФ.',
       },
       {
-        name: 'Султан Николаевич Абдиев',
+        name: 'Султан Назирович Абдиев',
         description: 'заслуженный деятель искусств РФ.',
       },
       {
         name: 'Александр Александрович Водопьянов',
         description: 'заслуженный артист РФ.',
+      },
+      {
+        name: 'Михаил Петрович Семаков',
+        description: 'заслуженный артист РФ, профессор кафедры мастерства актёра, кандидат педагогических наук.',
+      },
+      {
+        name: 'Елена Александровна Дунаева',
+        description: 'доктор искусствоведения, профессор, заведующая кафедрой искусствоведения Театрального института имени Бориса Щукина.',
+      },
+      {
+        name: 'Алексей Витальевич Курганов',
+        description: 'актёр театра и кино, театральный режиссёр, педагог, кандидат филологических наук.',
       },
       {
         name: 'Юрий Николаевич Погребничко',
@@ -199,12 +211,24 @@ const copy = {
         description: 'Honored Artist of the Russian Federation.',
       },
       {
-        name: 'Sultan Nikolaevich Abdiev',
+        name: 'Sultan Nazirovich Abdiev',
         description: 'Honored Art Worker of the Russian Federation.',
       },
       {
         name: 'Alexander Alexandrovich Vodopyanov',
         description: 'Honored Artist of the Russian Federation.',
+      },
+      {
+        name: 'Mikhail Petrovich Semakov',
+        description: 'Honored Artist of the Russian Federation, professor of the Department of Acting, Candidate of Pedagogical Sciences.',
+      },
+      {
+        name: 'Elena Alexandrovna Dunaeva',
+        description: 'Doctor of Art History, professor, head of the Department of Art History at the Boris Shchukin Theatre Institute.',
+      },
+      {
+        name: 'Alexey Vitalievich Kurganov',
+        description: 'Theatre and film actor, theatre director, teacher, Candidate of Philological Sciences.',
       },
       {
         name: 'Yury Nikolaevich Pogrebnichko',
