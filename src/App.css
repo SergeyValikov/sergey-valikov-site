@@ -876,26 +876,82 @@ main {
   column-gap: 6vw;
 }
 
-.about-inner blockquote {
-  max-width: 1000px;
-  margin: 0;
-  font-family: var(--display);
-  font-size: clamp(40px, 5.2vw, 78px);
-  font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -0.035em;
+.about-content {
+  grid-column: 2;
+  max-width: 1040px;
 }
 
-.about-copy {
-  grid-column: 2;
-  max-width: 610px;
-  margin: 80px 0 0 auto;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
+.about-text {
+  max-width: 920px;
+}
+
+.about-text p {
+  margin: 0;
   color: #aaa8a2;
   font-family: var(--display);
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: clamp(20px, 2vw, 31px);
+  font-weight: 400;
+  line-height: 1.42;
+  letter-spacing: -0.018em;
+}
+
+.about-text p + p {
+  margin-top: 28px;
+}
+
+.about-text .about-lead {
+  color: var(--paper);
+  font-size: clamp(34px, 4.2vw, 66px);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.about-teachers {
+  max-width: 920px;
+  margin-top: clamp(56px, 6vw, 90px);
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.about-teachers h3 {
+  margin: 0 0 28px;
+  color: #aaa8a2;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.about-teachers ul {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-teachers li {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.85fr) minmax(0, 1.15fr);
+  gap: 24px;
+  padding: 0 0 22px;
+  color: rgba(232, 229, 222, 0.62);
+  font-size: 16px;
+  line-height: 1.58;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.about-teachers li + li {
+  padding-top: 22px;
+}
+
+.about-teachers strong {
+  color: var(--paper);
+  font-weight: 500;
+}
+
+.about-teachers span {
+  color: rgba(232, 229, 222, 0.66);
 }
 
 .media-section {
@@ -1264,8 +1320,31 @@ main {
   }
   .about-section { padding: 100px 25px; }
   .about-inner { display: block; }
-  .about-inner blockquote { margin-top: 52px; font-size: 40px; }
-  .about-copy { margin-top: 64px; font-size: 17px; }
+  .about-content { margin-top: 52px; }
+  .about-text p {
+    font-size: 18px;
+    line-height: 1.52;
+  }
+  .about-text .about-lead {
+    font-size: 38px;
+    line-height: 1.12;
+  }
+  .about-text p + p {
+    margin-top: 22px;
+  }
+  .about-teachers {
+    margin-top: 48px;
+    padding-top: 24px;
+  }
+  .about-teachers h3 {
+    font-size: 10px;
+    line-height: 1.7;
+  }
+  .about-teachers li {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    font-size: 15px;
+  }
   .media-section {
     min-height: 58vh;
     display: block;
@@ -1608,14 +1687,38 @@ html.real-mobile .about-inner {
   display: block;
 }
 
-html.real-mobile .about-inner blockquote {
+html.real-mobile .about-content {
   margin-top: 52px;
-  font-size: 40px;
 }
 
-html.real-mobile .about-copy {
-  margin-top: 64px;
-  font-size: 17px;
+html.real-mobile .about-text p {
+  font-size: 18px;
+  line-height: 1.52;
+}
+
+html.real-mobile .about-text .about-lead {
+  font-size: 38px;
+  line-height: 1.12;
+}
+
+html.real-mobile .about-text p + p {
+  margin-top: 22px;
+}
+
+html.real-mobile .about-teachers {
+  margin-top: 48px;
+  padding-top: 24px;
+}
+
+html.real-mobile .about-teachers h3 {
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+html.real-mobile .about-teachers li {
+  grid-template-columns: 1fr;
+  gap: 6px;
+  font-size: 15px;
 }
 
 html.real-mobile .media-section {

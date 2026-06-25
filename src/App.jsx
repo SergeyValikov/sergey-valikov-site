@@ -124,13 +124,36 @@ const copy = {
     openProjectImdb: 'Открыть проект в IMDb',
     trailerLabel: 'Трейлер',
     comingSoon: 'Скоро',
-    aboutEyebrow: '04 / О режиссёре',
-    aboutQuote: '«Меня интересует момент, когда привычный порядок даёт трещину — и в ней становится виден человек».',
-    aboutCopy: 'Сергей Валиков — режиссёр. Его художественный язык строится на точности наблюдения, внутреннем ритме и внимании к тому, что обычно остаётся за пределами света.',
-    mediaEyebrow: '05 / СМИ',
+    aboutEyebrow: '02 / О режиссёре',
+    aboutParagraphs: [
+      'Сергей Сергеевич Валиков — режиссёр драмы, выпускник режиссёрского факультета Театрального института имени Бориса Щукина при Государственном академическом театре имени Евгения Вахтангова.',
+      'Работает в области театра, кино и телевидения.',
+      'В начале профессионального пути служил артистом драматического театра. Позже много путешествовал как по России, так и за рубежом, искал новые средства выражения своих творческих идей и в итоге пришёл к режиссуре.',
+      'В своих спектаклях самостоятельно создаёт сценографию, художественное и музыкальное оформление, а также пишет сценарии и инсценировки для собственных работ.',
+    ],
+    aboutTeachersTitle: 'Главные учителя на пути к профессии:',
+    aboutTeachers: [
+      {
+        name: 'Валерий Октябринович Журавлёв',
+        description: 'заслуженный артист РФ.',
+      },
+      {
+        name: 'Султан Николаевич Абдиев',
+        description: 'заслуженный деятель искусств РФ.',
+      },
+      {
+        name: 'Александр Александрович Водопьянов',
+        description: 'заслуженный артист РФ.',
+      },
+      {
+        name: 'Юрий Николаевич Погребничко',
+        description: 'народный артист РФ, заслуженный деятель искусств РФ, лауреат Государственной премии РФ и премии «Золотая маска»; режиссёр, педагог, художественный руководитель театра «Около дома Станиславского» — театра, отмеченного тремя премиями «Золотая маска».',
+      },
+    ],
+    mediaEyebrow: '03 / СМИ',
     mediaTitle: 'Публикации и разговоры',
     mediaCopy: 'Материалы скоро появятся.',
-    contactEyebrow: '06 / Контакты',
+    contactEyebrow: '04 / Контакты',
     contactTitle: 'Начать разговор',
     contactCopy: 'Контактные данные скоро появятся',
     footerName: 'Сергей Валиков',
@@ -162,13 +185,36 @@ const copy = {
     openProjectImdb: 'Open project on IMDb',
     trailerLabel: 'Trailer',
     comingSoon: 'Soon',
-    aboutEyebrow: '04 / About',
-    aboutQuote: '“I am interested in the moment when the familiar order cracks — and a person becomes visible within it.”',
-    aboutCopy: 'Sergey Valikov is a director. His artistic language is built on precise observation, inner rhythm, and attention to what usually remains beyond the light.',
-    mediaEyebrow: '05 / Press',
+    aboutEyebrow: '02 / About',
+    aboutParagraphs: [
+      'Sergey Sergeevich Valikov is a drama director and a graduate of the directing department of the Boris Shchukin Theatre Institute at the Evgeny Vakhtangov State Academic Theatre.',
+      'He works in theatre, film, and television.',
+      'At the beginning of his professional path, he served as an actor in a drama theatre. Later, he travelled extensively across Russia and abroad, searching for new means of expressing his creative ideas, and eventually came to directing.',
+      'In his productions, he independently creates the scenography, artistic and musical design, and also writes scripts and stage adaptations for his own works.',
+    ],
+    aboutTeachersTitle: 'Key teachers on the path to the profession:',
+    aboutTeachers: [
+      {
+        name: 'Valery Oktyabrinovich Zhuravlyov',
+        description: 'Honored Artist of the Russian Federation.',
+      },
+      {
+        name: 'Sultan Nikolaevich Abdiev',
+        description: 'Honored Art Worker of the Russian Federation.',
+      },
+      {
+        name: 'Alexander Alexandrovich Vodopyanov',
+        description: 'Honored Artist of the Russian Federation.',
+      },
+      {
+        name: 'Yury Nikolaevich Pogrebnichko',
+        description: 'People’s Artist of the Russian Federation, Honored Art Worker of the Russian Federation, laureate of the State Prize of the Russian Federation and the Golden Mask Award; director, teacher, and artistic director of the Okolo Theatre near the Stanislavsky House — a theatre awarded three Golden Mask prizes.',
+      },
+    ],
+    mediaEyebrow: '03 / Press',
     mediaTitle: 'Publications and conversations',
     mediaCopy: 'Materials coming soon.',
-    contactEyebrow: '06 / Contact',
+    contactEyebrow: '04 / Contact',
     contactTitle: 'Start a conversation',
     contactCopy: 'Contact details coming soon',
     footerName: 'Sergey Valikov',
@@ -439,8 +485,25 @@ function About({ t }) {
     <section className="about-section" id="about">
       <div className="about-inner">
         <p className="eyebrow">{t.aboutEyebrow}</p>
-        <blockquote>{t.aboutQuote}</blockquote>
-        <p className="about-copy">{t.aboutCopy}</p>
+        <div className="about-content">
+          <div className="about-text">
+            {t.aboutParagraphs.map((paragraph, index) => (
+              <p className={index === 0 ? 'about-lead' : undefined} key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+
+          <div className="about-teachers">
+            <h3>{t.aboutTeachersTitle}</h3>
+            <ul>
+              {t.aboutTeachers.map((teacher) => (
+                <li key={teacher.name}>
+                  <strong>{teacher.name}</strong>
+                  <span>{teacher.description}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
   )
