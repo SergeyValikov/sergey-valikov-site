@@ -197,6 +197,14 @@ const copy = {
     aboutTeachersTitle: 'Главные учителя на пути к профессии:',
     aboutTeachers: [
       {
+        name: 'Юрий Николаевич Погребничко',
+        description: 'народный артист РФ, заслуженный деятель искусств РФ, лауреат Государственной премии РФ и премии «Золотая маска»; режиссёр, педагог, художественный руководитель театра «Около дома Станиславского» — театра, отмеченного тремя премиями «Золотая маска».',
+      },
+      {
+        name: 'Алексей Витальевич Курганов',
+        description: 'актёр театра и кино, театральный режиссёр, педагог, кандидат филологических наук.',
+      },
+      {
         name: 'Валерий Октябринович Журавлёв',
         description: 'заслуженный артист РФ.',
       },
@@ -215,14 +223,6 @@ const copy = {
       {
         name: 'Елена Александровна Дунаева',
         description: 'доктор искусствоведения, профессор, заведующая кафедрой искусствоведения Театрального института имени Бориса Щукина.',
-      },
-      {
-        name: 'Алексей Витальевич Курганов',
-        description: 'актёр театра и кино, театральный режиссёр, педагог, кандидат филологических наук.',
-      },
-      {
-        name: 'Юрий Николаевич Погребничко',
-        description: 'народный артист РФ, заслуженный деятель искусств РФ, лауреат Государственной премии РФ и премии «Золотая маска»; режиссёр, педагог, художественный руководитель театра «Около дома Станиславского» — театра, отмеченного тремя премиями «Золотая маска».',
       },
     ],
     mediaEyebrow: '03 / СМИ',
@@ -276,6 +276,14 @@ const copy = {
     aboutTeachersTitle: 'Key teachers on the path to the profession:',
     aboutTeachers: [
       {
+        name: 'Yury Nikolaevich Pogrebnichko',
+        description: 'People’s Artist of the Russian Federation, Honored Art Worker of the Russian Federation, laureate of the State Prize of the Russian Federation and the Golden Mask Award; director, teacher, and artistic director of the Okolo Theatre near the Stanislavsky House — a theatre awarded three Golden Mask prizes.',
+      },
+      {
+        name: 'Alexey Vitalievich Kurganov',
+        description: 'Theatre and film actor, theatre director, teacher, Candidate of Philological Sciences.',
+      },
+      {
         name: 'Valery Oktyabrinovich Zhuravlyov',
         description: 'Honored Artist of the Russian Federation.',
       },
@@ -294,14 +302,6 @@ const copy = {
       {
         name: 'Elena Alexandrovna Dunaeva',
         description: 'Doctor of Art History, professor, head of the Department of Art History at the Boris Shchukin Theatre Institute.',
-      },
-      {
-        name: 'Alexey Vitalievich Kurganov',
-        description: 'Theatre and film actor, theatre director, teacher, Candidate of Philological Sciences.',
-      },
-      {
-        name: 'Yury Nikolaevich Pogrebnichko',
-        description: 'People’s Artist of the Russian Federation, Honored Art Worker of the Russian Federation, laureate of the State Prize of the Russian Federation and the Golden Mask Award; director, teacher, and artistic director of the Okolo Theatre near the Stanislavsky House — a theatre awarded three Golden Mask prizes.',
       },
     ],
     mediaEyebrow: '03 / Press',
