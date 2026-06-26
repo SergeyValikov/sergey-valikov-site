@@ -1,5 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import './App.css'
+
+const GALLERY_SLIDE_SIZE = 6
+
+const MIRACLE_GALLERY_SLIDES = [
+  [1, 6, 9, 10, 14, 15],
+  [3, 2, 4, 5, 7, 8],
+  [11, 12, 13, 16, 17, 18],
+  [19, 20, 21, 22, 23, 24],
+  [25, 1, 8, 15, 17, 6],
+].map((slide) => slide.map((item) => item - 1))
 
 const navigationTargets = [
   ['about', '#about'],
@@ -23,6 +34,39 @@ const cinemaProjects = [
   },
 ]
 
+function createMiracleGallery() {
+  return Array.from({ length: 25 }, (_, index) => {
+    const number = String(index + 1).padStart(2, '0')
+
+    return {
+      index,
+      src: `/works/miracle-anthony/photo-${number}.jpg`,
+      thumb: `/works/miracle-anthony/thumb-${number}.jpg`,
+    }
+  })
+}
+
+function createGallerySlides(gallery, slideIndexes) {
+  if (!gallery?.length) return []
+
+  if (slideIndexes?.length) {
+    return slideIndexes.map((slide) => (
+      slide
+        .map((galleryIndex) => gallery[galleryIndex % gallery.length])
+        .filter(Boolean)
+    ))
+  }
+
+  const slideCount = Math.ceil(gallery.length / GALLERY_SLIDE_SIZE)
+
+  return Array.from({ length: slideCount }, (_, slideIndex) => (
+    Array.from({ length: GALLERY_SLIDE_SIZE }, (_, offset) => {
+      const galleryIndex = (slideIndex * GALLERY_SLIDE_SIZE + offset) % gallery.length
+      return gallery[galleryIndex]
+    })
+  ))
+}
+
 const theatreProjects = [
   {
     title: {
@@ -33,6 +77,19 @@ const theatreProjects = [
     posterAlt: 'Афиша спектакля Стеклянный зверинец',
     trailer: '/works/glass-menagerie-trailer.mp4',
     trailerPoster: '/works/glass-menagerie-trailer-poster.jpg',
+  },
+  {
+    title: {
+      ru: 'ЧУДО СВЯТОГО АНТОНИЯ',
+      en: 'THE MIRACLE OF SAINT ANTHONY',
+    },
+    poster: '/works/miracle-anthony/poster.jpg',
+    posterAlt: {
+      ru: 'Афиша спектакля Чудо Святого Антония',
+      en: 'Poster for The Miracle of Saint Anthony',
+    },
+    gallery: createMiracleGallery(),
+    gallerySlides: MIRACLE_GALLERY_SLIDES,
   },
 ]
 
@@ -123,6 +180,12 @@ const copy = {
     worksPreviewLabel: { cinema: 'Кадры или трейлер кинопроекта', theatre: 'Фото или видеозапись спектакля' },
     openProjectImdb: 'Открыть проект в IMDb',
     trailerLabel: 'Трейлер',
+    galleryLabel: 'Фото спектакля',
+    openPhotoLabel: 'Открыть фото',
+    closeGalleryLabel: 'Закрыть галерею',
+    previousPhotoLabel: 'Предыдущее фото',
+    nextPhotoLabel: 'Следующее фото',
+    photoCounter: 'фото',
     comingSoon: 'Скоро',
     aboutEyebrow: '02 / О режиссёре',
     aboutParagraphs: [
@@ -196,6 +259,12 @@ const copy = {
     worksPreviewLabel: { cinema: 'Film stills or trailer', theatre: 'Production photos or video' },
     openProjectImdb: 'Open project on IMDb',
     trailerLabel: 'Trailer',
+    galleryLabel: 'Production photos',
+    openPhotoLabel: 'Open photo',
+    closeGalleryLabel: 'Close gallery',
+    previousPhotoLabel: 'Previous photo',
+    nextPhotoLabel: 'Next photo',
+    photoCounter: 'photo',
     comingSoon: 'Soon',
     aboutEyebrow: '02 / About',
     aboutParagraphs: [
@@ -376,13 +445,82 @@ function CinemaProjects({ t }) {
 }
 
 function TheatreProjects({ language, t }) {
+  const [lightbox, setLightbox] = useState(null)
+  const [gallerySlideByProject, setGallerySlideByProject] = useState({})
+  const lightboxProject = lightbox ? theatreProjects[lightbox.projectIndex] : null
+  const lightboxPhotos = lightboxProject?.gallery ?? []
+  const lightboxPhoto = lightboxPhotos[lightbox?.photoIndex ?? 0]
+  const lightboxTitle = lightboxProject ? getLocalizedText(lightboxProject.title, language) : ''
+
+  const showLightboxPhoto = useCallback((direction) => {
+    setLightbox((current) => {
+      if (!current) return current
+
+      const galleryLength = theatreProjects[current.projectIndex]?.gallery?.length ?? 0
+      if (!galleryLength) return current
+
+      return {
+        ...current,
+        photoIndex: (current.photoIndex + direction + galleryLength) % galleryLength,
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    if (lightbox) return undefined
+
+    const timer = window.setInterval(() => {
+      setGallerySlideByProject((current) => {
+        const next = { ...current }
+
+        theatreProjects.forEach((project, projectIndex) => {
+          if (!project.gallery) return
+
+          const slideCount = createGallerySlides(project.gallery, project.gallerySlides).length
+          if (!slideCount) return
+
+          next[projectIndex] = ((next[projectIndex] ?? 0) + 1) % slideCount
+        })
+
+        return next
+      })
+    }, 2000)
+
+    return () => window.clearInterval(timer)
+  }, [lightbox])
+
+  useEffect(() => {
+    if (!lightbox) return undefined
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setLightbox(null)
+      if (event.key === 'ArrowLeft') showLightboxPhoto(-1)
+      if (event.key === 'ArrowRight') showLightboxPhoto(1)
+    }
+
+    document.body.classList.add('is-lightbox-open')
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.classList.remove('is-lightbox-open')
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [lightbox, showLightboxPhoto])
+
   return (
     <div className="theatre-projects">
       {theatreProjects.map((project, index) => {
         const projectTitle = getLocalizedText(project.title, language)
+        const posterAlt = getLocalizedText(project.posterAlt, language)
+        const gallerySlides = project.gallery ? createGallerySlides(project.gallery, project.gallerySlides) : []
+        const activeGallerySlide = gallerySlideByProject[index] ?? 0
+        const visibleGalleryPhotos = gallerySlides[activeGallerySlide] ?? []
 
         return (
-          <article className="theatre-project" key={project.title.ru}>
+          <article
+            className={`theatre-project${project.gallery ? ' theatre-project--gallery' : ''}`}
+            key={project.title.ru}
+          >
             <div className="project-heading">
               <span>{String(index + 1).padStart(2, '0')}</span>
               <h4>{projectTitle}</h4>
@@ -390,28 +528,94 @@ function TheatreProjects({ language, t }) {
 
             <div className="theatre-project-body">
               <div className="project-poster">
-                <img src={project.poster} alt={project.posterAlt} loading="lazy" />
+                <img src={project.poster} alt={posterAlt} loading="lazy" />
               </div>
 
-              <div className="project-trailer theatre-trailer">
-                <div className="project-video-frame">
-                  <video
-                    src={project.trailer}
-                    poster={project.trailerPoster}
-                    preload="metadata"
-                    controls
-                    playsInline
-                    aria-label={`${projectTitle} — ${t.trailerLabel}`}
-                  />
+              {project.gallery ? (
+                <div className="project-gallery-card theatre-gallery-card">
+                  <div
+                    className="theatre-gallery"
+                    key={`${project.title.ru}-${activeGallerySlide}`}
+                    aria-label={`${projectTitle} — ${t.galleryLabel}`}
+                  >
+                    {visibleGalleryPhotos.map((photo) => (
+                      <button
+                        className="gallery-tile"
+                        key={photo.src}
+                        type="button"
+                        onClick={() => setLightbox({ projectIndex: index, photoIndex: photo.index })}
+                        aria-label={`${t.openPhotoLabel} ${photo.index + 1}: ${projectTitle}`}
+                      >
+                        <img src={photo.thumb} alt="" loading="lazy" />
+                      </button>
+                    ))}
+                  </div>
+                  <div className="project-trailer-label gallery-label">
+                    <p>
+                      <span>{t.galleryLabel}</span>
+                      <span>{String(activeGallerySlide + 1).padStart(2, '0')} / {String(gallerySlides.length).padStart(2, '0')}</span>
+                    </p>
+                  </div>
                 </div>
-                <div className="project-trailer-label">
-                  <p>{t.trailerLabel}</p>
+              ) : (
+                <div className="project-trailer theatre-trailer">
+                  <div className="project-video-frame">
+                    <video
+                      src={project.trailer}
+                      poster={project.trailerPoster}
+                      preload="metadata"
+                      controls
+                      playsInline
+                      aria-label={`${projectTitle} — ${t.trailerLabel}`}
+                    />
+                  </div>
+                  <div className="project-trailer-label">
+                    <p>{t.trailerLabel}</p>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </article>
         )
       })}
+
+      {lightboxPhoto && createPortal((
+        <div className="gallery-lightbox" role="dialog" aria-modal="true" aria-label={`${lightboxTitle} — ${t.galleryLabel}`}>
+          <button
+            className="lightbox-close"
+            type="button"
+            onClick={() => setLightbox(null)}
+            aria-label={t.closeGalleryLabel}
+          >
+            ×
+          </button>
+
+          <button
+            className="lightbox-nav lightbox-nav--prev"
+            type="button"
+            onClick={() => showLightboxPhoto(-1)}
+            aria-label={t.previousPhotoLabel}
+          >
+            ←
+          </button>
+
+          <figure className="lightbox-figure">
+            <img src={lightboxPhoto.src} alt={`${lightboxTitle} — ${t.photoCounter} ${lightbox.photoIndex + 1}`} />
+            <figcaption>
+              {String(lightbox.photoIndex + 1).padStart(2, '0')} / {String(lightboxPhotos.length).padStart(2, '0')}
+            </figcaption>
+          </figure>
+
+          <button
+            className="lightbox-nav lightbox-nav--next"
+            type="button"
+            onClick={() => showLightboxPhoto(1)}
+            aria-label={t.nextPhotoLabel}
+          >
+            →
+          </button>
+        </div>
+      ), document.body)}
     </div>
   )
 }
