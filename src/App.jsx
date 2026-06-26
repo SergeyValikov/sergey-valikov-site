@@ -83,7 +83,7 @@ const theatreProjects = [
       ru: 'ЧУДО СВЯТОГО АНТОНИЯ',
       en: 'THE MIRACLE OF SAINT ANTHONY',
     },
-    poster: '/works/miracle-anthony/poster.jpg',
+    poster: '/works/miracle-anthony/poster-rich.jpg',
     posterAlt: {
       ru: 'Афиша спектакля Чудо Святого Антония',
       en: 'Poster for The Miracle of Saint Anthony',
@@ -210,7 +210,7 @@ const copy = {
       },
       {
         name: 'Султан Назирович Абдиев',
-        description: 'заслуженный деятель искусств РФ.',
+        description: 'заслуженный деятель искусств РФ, театральный режиссёр, ученик Марка Захарова.',
       },
       {
         name: 'Александр Александрович Водопьянов',
@@ -289,7 +289,7 @@ const copy = {
       },
       {
         name: 'Sultan Nazirovich Abdiev',
-        description: 'Honored Art Worker of the Russian Federation.',
+        description: 'Honored Art Worker of the Russian Federation, theatre director, student of Mark Zakharov.',
       },
       {
         name: 'Alexander Alexandrovich Vodopyanov',
