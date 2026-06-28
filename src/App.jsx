@@ -12,6 +12,16 @@ const MIRACLE_GALLERY_SLIDES = [
   [25, 1, 8, 15, 17, 6],
 ].map((slide) => slide.map((item) => item - 1))
 
+const TELEVISION_GALLERY_SLIDES = [
+  [5, 6, 20, 21],
+  [13, 14, 15, 16],
+  [22, 23, 24, 27],
+  [25, 26, 12, 10],
+  [1, 2, 3, 4],
+  [17, 18, 19, 7],
+  [8, 9, 11, 5],
+].map((slide) => slide.map((item) => item - 1))
+
 const navigationTargets = [
   ['about', '#about'],
   ['media', '#media'],
@@ -23,7 +33,7 @@ const cinemaProjects = [
     banner: '/works/conductor-banner.jpg',
     bannerAlt: 'Баннер фильма CONDUCTOR',
     trailer: '/works/conductor-trailer.mp4',
-    trailerPoster: '/works/conductor-trailer-poster.jpg',
+    trailerPoster: '/works/conductor-trailer-preview.png',
     imdbUrl: 'https://www.imdb.com/title/tt39178320/?ref_=fn_t_10',
   },
   {
@@ -42,6 +52,18 @@ function createMiracleGallery() {
       index,
       src: `/works/miracle-anthony/photo-${number}.jpg`,
       thumb: `/works/miracle-anthony/thumb-${number}.jpg`,
+    }
+  })
+}
+
+function createTelevisionGallery() {
+  return Array.from({ length: 27 }, (_, index) => {
+    const number = String(index + 1).padStart(2, '0')
+
+    return {
+      index,
+      src: `/works/television/photo-${number}.jpg`,
+      thumb: `/works/television/thumb-${number}.jpg`,
     }
   })
 }
@@ -67,6 +89,9 @@ function createGallerySlides(gallery, slideIndexes) {
   ))
 }
 
+const televisionGallery = createTelevisionGallery()
+const televisionGallerySlides = createGallerySlides(televisionGallery, TELEVISION_GALLERY_SLIDES)
+
 const theatreProjects = [
   {
     title: {
@@ -76,14 +101,14 @@ const theatreProjects = [
     poster: '/works/glass-menagerie-poster.jpg',
     posterAlt: 'Афиша спектакля Стеклянный зверинец',
     trailer: '/works/glass-menagerie-trailer.mp4',
-    trailerPoster: '/works/glass-menagerie-trailer-poster.jpg',
+    trailerPoster: '/works/glass-menagerie-trailer-preview.png',
   },
   {
     title: {
       ru: 'ЧУДО СВЯТОГО АНТОНИЯ',
       en: 'THE MIRACLE OF SAINT ANTHONY',
     },
-    poster: '/works/miracle-anthony/poster-rich.jpg',
+    poster: '/works/miracle-anthony/poster.jpg',
     posterAlt: {
       ru: 'Афиша спектакля Чудо Святого Антония',
       en: 'Poster for The Miracle of Saint Anthony',
@@ -181,6 +206,7 @@ const copy = {
     openProjectImdb: 'Открыть проект в IMDb',
     trailerLabel: 'Трейлер',
     galleryLabel: 'Фото спектакля',
+    televisionGalleryLabel: 'Фото со съёмок',
     openPhotoLabel: 'Открыть фото',
     closeGalleryLabel: 'Закрыть галерею',
     previousPhotoLabel: 'Предыдущее фото',
@@ -189,7 +215,7 @@ const copy = {
     comingSoon: 'Скоро',
     aboutEyebrow: '02 / О режиссёре',
     aboutParagraphs: [
-      'Сергей Сергеевич Валиков — режиссёр драмы, выпускник режиссёрского факультета Театрального института имени Бориса Щукина при Государственном академическом театре имени Евгения Вахтангова.',
+      'Сергей Сергеевич Валиков — режиссёр драмы, выпускник режиссёрского факультета Театрального института имени Бориса Щукина при Государственном академическом театре имени Евгения Вахтангова, город Москва.',
       'Работает в области театра, кино и телевидения.',
       'В начале профессионального пути служил артистом драматического театра. Позже много путешествовал как по России, так и за рубежом, искал новые средства выражения своих творческих идей и в итоге пришёл к режиссуре.',
       'В своих спектаклях самостоятельно создаёт сценографию, художественное и музыкальное оформление, а также пишет сценарии и инсценировки для собственных работ.',
@@ -198,31 +224,31 @@ const copy = {
     aboutTeachers: [
       {
         name: 'Юрий Николаевич Погребничко',
-        description: 'народный артист РФ, заслуженный деятель искусств РФ, лауреат Государственной премии РФ и премии «Золотая маска»; режиссёр, педагог, художественный руководитель театра «Около дома Станиславского» — театра, отмеченного тремя премиями «Золотая маска».',
+        description: 'Народный артист РФ, заслуженный деятель искусств РФ, лауреат Государственной премии РФ и премии «Золотая маска»; режиссёр, педагог, художественный руководитель театра «Около дома Станиславского» — театра, отмеченного тремя премиями «Золотая маска».',
       },
       {
         name: 'Алексей Витальевич Курганов',
-        description: 'актёр театра и кино, театральный режиссёр, педагог, кандидат филологических наук.',
+        description: 'Актёр театра и кино, театральный режиссёр, педагог, кандидат филологических наук.',
       },
       {
         name: 'Валерий Октябринович Журавлёв',
-        description: 'заслуженный артист РФ.',
+        description: 'Заслуженный артист РФ.',
       },
       {
         name: 'Султан Назирович Абдиев',
-        description: 'заслуженный деятель искусств РФ, театральный режиссёр, ученик Марка Захарова.',
+        description: 'Заслуженный деятель искусств РФ, театральный режиссёр, ученик Марка Захарова.',
       },
       {
         name: 'Александр Александрович Водопьянов',
-        description: 'заслуженный артист РФ.',
+        description: 'Заслуженный артист РФ.',
       },
       {
         name: 'Михаил Петрович Семаков',
-        description: 'заслуженный артист РФ, профессор кафедры мастерства актёра, кандидат педагогических наук.',
+        description: 'Заслуженный артист РФ, профессор кафедры мастерства актёра, кандидат педагогических наук.',
       },
       {
         name: 'Елена Александровна Дунаева',
-        description: 'доктор искусствоведения, профессор, заведующая кафедрой искусствоведения Театрального института имени Бориса Щукина.',
+        description: 'Доктор искусствоведения, профессор, заведующая кафедрой искусствоведения Театрального института имени Бориса Щукина.',
       },
     ],
     mediaEyebrow: '03 / СМИ',
@@ -260,6 +286,7 @@ const copy = {
     openProjectImdb: 'Open project on IMDb',
     trailerLabel: 'Trailer',
     galleryLabel: 'Production photos',
+    televisionGalleryLabel: 'Behind-the-scenes photos',
     openPhotoLabel: 'Open photo',
     closeGalleryLabel: 'Close gallery',
     previousPhotoLabel: 'Previous photo',
@@ -268,7 +295,7 @@ const copy = {
     comingSoon: 'Soon',
     aboutEyebrow: '02 / About',
     aboutParagraphs: [
-      'Sergey Sergeevich Valikov is a drama director and a graduate of the directing department of the Boris Shchukin Theatre Institute at the Evgeny Vakhtangov State Academic Theatre.',
+      'Sergey Sergeevich Valikov is a drama director and a graduate of the directing department of the Boris Shchukin Theatre Institute at the Evgeny Vakhtangov State Academic Theatre, Moscow.',
       'He works in theatre, film, and television.',
       'At the beginning of his professional path, he served as an actor in a drama theatre. Later, he travelled extensively across Russia and abroad, searching for new means of expressing his creative ideas, and eventually came to directing.',
       'In his productions, he independently creates the scenography, artistic and musical design, and also writes scripts and stage adaptations for his own works.',
@@ -375,7 +402,7 @@ function Hero({ language, onLanguageChange, t }) {
       <HeroOverlay />
       <Header language={language} onLanguageChange={onLanguageChange} t={t} />
       <HeroContent t={t} />
-      <div className="hero-caption" aria-hidden="true"><span>{t.authorView}</span><span>01</span></div>
+      <div className="hero-caption" aria-hidden="true"><span>{t.authorView}</span><span>:</span></div>
       <a className="scroll-cue" href="#works" aria-label={t.nextLabel}><span />{t.next}</a>
     </section>
   )
@@ -620,6 +647,127 @@ function TheatreProjects({ language, t }) {
   )
 }
 
+function TelevisionProjects({ t }) {
+  const [activeGallerySlide, setActiveGallerySlide] = useState(0)
+  const [lightbox, setLightbox] = useState(null)
+  const lightboxPhoto = lightbox ? televisionGallery[lightbox.photoIndex] : null
+  const visibleGalleryPhotos = televisionGallerySlides[activeGallerySlide] ?? []
+
+  const showLightboxPhoto = useCallback((direction) => {
+    setLightbox((current) => {
+      if (!current) return current
+
+      return {
+        photoIndex: (current.photoIndex + direction + televisionGallery.length) % televisionGallery.length,
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    if (lightbox || televisionGallerySlides.length < 2) return undefined
+
+    const timer = window.setInterval(() => {
+      setActiveGallerySlide((current) => (current + 1) % televisionGallerySlides.length)
+    }, 2000)
+
+    return () => window.clearInterval(timer)
+  }, [lightbox])
+
+  useEffect(() => {
+    if (!lightbox) return undefined
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setLightbox(null)
+      if (event.key === 'ArrowLeft') showLightboxPhoto(-1)
+      if (event.key === 'ArrowRight') showLightboxPhoto(1)
+    }
+
+    document.body.classList.add('is-lightbox-open')
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.classList.remove('is-lightbox-open')
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [lightbox, showLightboxPhoto])
+
+  return (
+    <div className="television-projects">
+      <article className="television-project">
+        <div className="project-heading television-heading">
+          <span>01</span>
+          <h4>{t.televisionGalleryLabel}</h4>
+        </div>
+
+        <div className="project-gallery-card television-gallery-card">
+          <div
+            className="television-gallery"
+            key={`television-${activeGallerySlide}`}
+            aria-label={`${t.worksTabs.television} — ${t.televisionGalleryLabel}`}
+          >
+            {visibleGalleryPhotos.map((photo) => (
+              <button
+                className="gallery-tile television-gallery-tile"
+                key={photo.src}
+                type="button"
+                onClick={() => setLightbox({ photoIndex: photo.index })}
+                aria-label={`${t.openPhotoLabel} ${photo.index + 1}: ${t.worksTabs.television}`}
+              >
+                <img src={photo.thumb} alt="" loading="lazy" />
+              </button>
+            ))}
+          </div>
+
+          <div className="project-trailer-label gallery-label">
+            <p>
+              <span>{t.televisionGalleryLabel}</span>
+              <span>{String(activeGallerySlide + 1).padStart(2, '0')} / {String(televisionGallerySlides.length).padStart(2, '0')}</span>
+            </p>
+          </div>
+        </div>
+      </article>
+
+      {lightboxPhoto && createPortal((
+        <div className="gallery-lightbox" role="dialog" aria-modal="true" aria-label={`${t.worksTabs.television} — ${t.televisionGalleryLabel}`}>
+          <button
+            className="lightbox-close"
+            type="button"
+            onClick={() => setLightbox(null)}
+            aria-label={t.closeGalleryLabel}
+          >
+            ×
+          </button>
+
+          <button
+            className="lightbox-nav lightbox-nav--prev"
+            type="button"
+            onClick={() => showLightboxPhoto(-1)}
+            aria-label={t.previousPhotoLabel}
+          >
+            ←
+          </button>
+
+          <figure className="lightbox-figure">
+            <img src={lightboxPhoto.src} alt={`${t.worksTabs.television} — ${t.photoCounter} ${lightbox.photoIndex + 1}`} />
+            <figcaption>
+              {String(lightbox.photoIndex + 1).padStart(2, '0')} / {String(televisionGallery.length).padStart(2, '0')}
+            </figcaption>
+          </figure>
+
+          <button
+            className="lightbox-nav lightbox-nav--next"
+            type="button"
+            onClick={() => showLightboxPhoto(1)}
+            aria-label={t.nextPhotoLabel}
+          >
+            →
+          </button>
+        </div>
+      ), document.body)}
+    </div>
+  )
+}
+
 function PlaceholderWorks({ activeCategory, t }) {
   return (
     <div className={`works-grid works-grid--${activeCategory === 'television' ? 'gallery' : 'paired'}`}>
@@ -661,7 +809,7 @@ function Works({ language, t }) {
     ? cinemaProjects.length
     : activeCategory === 'theatre'
       ? theatreProjects.length
-      : 3
+      : 1
 
   return (
     <section className="works-section" id="works">
@@ -702,7 +850,7 @@ function Works({ language, t }) {
 
         {activeCategory === 'cinema' && <CinemaProjects t={t} />}
         {activeCategory === 'theatre' && <TheatreProjects language={language} t={t} />}
-        {activeCategory === 'television' && <PlaceholderWorks activeCategory={activeCategory} t={t} />}
+        {activeCategory === 'television' && <TelevisionProjects t={t} />}
       </div>
     </section>
   )
@@ -753,7 +901,13 @@ function Contact({ t }) {
   return (
     <footer className="contact-section" id="contact">
       <p className="eyebrow">{t.contactEyebrow}</p>
-      <div className="contact-main"><h2>{t.contactTitle}</h2><p className="contact-placeholder">{t.contactCopy}</p></div>
+      <div className="contact-main">
+        <h2>{t.contactTitle}</h2>
+        <p className="contact-placeholder">
+          <a href="mailto:valikovdirector@gmail.com">✉ valikovdirector@gmail.com</a>
+          <a href="https://t.me/sergeyvalikov" target="_blank" rel="noreferrer"><img className="contact-icon contact-icon--telegram" src="/icons/telegram.svg" alt="" aria-hidden="true" /> sergeyvalikov</a>
+        </p>
+      </div>
       <div className="footer-line"><span>{t.footerName}</span><span>{t.footerRole}</span><a href="#top">{t.backToTop}</a></div>
     </footer>
   )
