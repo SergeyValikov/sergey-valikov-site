@@ -526,7 +526,7 @@ function TheatreProjects({ language, t }) {
 
         return next
       })
-    }, 2000)
+    }, 3000)
 
     return () => window.clearInterval(timer)
   }, [lightbox])
@@ -576,13 +576,13 @@ function TheatreProjects({ language, t }) {
               {project.gallery ? (
                 <div className="project-gallery-card theatre-gallery-card">
                   <div
-                    className="theatre-gallery"
+                    className={`theatre-gallery theatre-gallery--slide-${activeGallerySlide + 1}`}
                     key={`${project.title.ru}-${activeGallerySlide}`}
                     aria-label={`${projectTitle} — ${t.galleryLabel}`}
                   >
                     {visibleGalleryPhotos.map((photo) => (
                       <button
-                        className="gallery-tile"
+                        className={`gallery-tile gallery-tile--${photo.index + 1}`}
                         key={photo.src}
                         type="button"
                         onClick={() => setLightbox({ projectIndex: index, photoIndex: photo.index })}

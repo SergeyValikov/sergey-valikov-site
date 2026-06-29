@@ -753,6 +753,18 @@ body.is-lightbox-open {
   transition: filter 320ms ease, transform 520ms ease;
 }
 
+.theatre-gallery--slide-3 .gallery-tile--17 img {
+  object-position: center 34%;
+}
+
+.theatre-gallery--slide-3 .gallery-tile--18 img {
+  object-position: center 30%;
+}
+
+.theatre-gallery--slide-5 .gallery-tile--17 img {
+  object-position: center 18%;
+}
+
 .gallery-tile:nth-child(1) {
   grid-column: span 2;
   grid-row: span 2;
