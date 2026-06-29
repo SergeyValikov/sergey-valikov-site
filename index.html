@@ -28,7 +28,13 @@
           document.documentElement.classList.add('real-mobile')
         }
 
+        let canResetToHome = true
+        const stopAutoReset = () => {
+          canResetToHome = false
+        }
         const resetToHome = () => {
+          if (!canResetToHome) return
+
           if (window.location.hash) {
             window.history.replaceState(
               window.history.state,
@@ -43,6 +49,11 @@
         if ('scrollRestoration' in window.history) {
           window.history.scrollRestoration = 'manual'
         }
+
+        window.addEventListener('pointerdown', stopAutoReset, { once: true, passive: true })
+        window.addEventListener('touchstart', stopAutoReset, { once: true, passive: true })
+        window.addEventListener('click', stopAutoReset, { once: true })
+        window.addEventListener('keydown', stopAutoReset, { once: true })
 
         resetToHome()
         document.addEventListener('DOMContentLoaded', resetToHome, { once: true })

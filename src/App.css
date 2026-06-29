@@ -315,6 +315,25 @@ body.is-lightbox-open {
   border-color: var(--paper);
 }
 
+@media (hover: none) and (pointer: coarse) {
+  .button {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .button-primary:hover {
+    color: #111;
+    background: rgba(236, 233, 226, 0.94);
+    border-color: transparent;
+  }
+
+  .button-secondary:hover {
+    color: var(--paper);
+    background: transparent;
+    border-color: rgba(239, 237, 232, 0.5);
+  }
+}
+
 .hero-caption {
   position: absolute;
   z-index: 6;
