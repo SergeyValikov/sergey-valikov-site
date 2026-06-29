@@ -19,8 +19,8 @@ const TELEVISION_GALLERY_PHOTO_IDS = [
 ]
 
 const TELEVISION_GALLERY_SLIDES = [
-  [14, 20, 21, 22, 5],
-  [15, 16, 23, 24, 27],
+  [15, 20, 21, 22, 5],
+  [14, 16, 23, 24, 27],
   [25, 26, 12, 10, 1],
   [2, 3, 4, 17, 18],
   [19, 7, 8, 9, 11],
@@ -686,7 +686,7 @@ function TelevisionProjects({ t }) {
 
     const timer = window.setInterval(() => {
       setActiveGallerySlide((current) => (current + 1) % televisionGallerySlides.length)
-    }, 3000)
+    }, 4000)
 
     return () => window.clearInterval(timer)
   }, [lightbox])
