@@ -12,15 +12,19 @@ const MIRACLE_GALLERY_SLIDES = [
   [25, 1, 8, 15, 17, 6],
 ].map((slide) => slide.map((item) => item - 1))
 
+const TELEVISION_GALLERY_PHOTO_IDS = [
+  1, 2, 3, 4, 5,
+  7, 8, 9, 10, 11, 12,
+  14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+]
+
 const TELEVISION_GALLERY_SLIDES = [
-  [5, 6, 20, 21],
-  [13, 14, 15, 16],
-  [22, 23, 24, 27],
-  [25, 26, 12, 10],
-  [1, 2, 3, 4],
-  [17, 18, 19, 7],
-  [8, 9, 11, 5],
-].map((slide) => slide.map((item) => item - 1))
+  [14, 20, 21, 22, 5],
+  [15, 16, 23, 24, 27],
+  [25, 26, 12, 10, 1],
+  [2, 3, 4, 17, 18],
+  [19, 7, 8, 9, 11],
+]
 
 const navigationTargets = [
   ['about', '#about'],
@@ -57,11 +61,12 @@ function createMiracleGallery() {
 }
 
 function createTelevisionGallery() {
-  return Array.from({ length: 27 }, (_, index) => {
-    const number = String(index + 1).padStart(2, '0')
+  return TELEVISION_GALLERY_PHOTO_IDS.map((photoNumber, index) => {
+    const number = String(photoNumber).padStart(2, '0')
 
     return {
       index,
+      number: photoNumber,
       src: `/works/television/photo-${number}.jpg`,
       thumb: `/works/television/thumb-${number}.jpg`,
     }
@@ -89,8 +94,16 @@ function createGallerySlides(gallery, slideIndexes) {
   ))
 }
 
+function createTelevisionGallerySlides(gallery, slidePhotoNumbers) {
+  return slidePhotoNumbers.map((slide) => (
+    slide
+      .map((photoNumber) => gallery.find((photo) => photo.number === photoNumber))
+      .filter(Boolean)
+  ))
+}
+
 const televisionGallery = createTelevisionGallery()
-const televisionGallerySlides = createGallerySlides(televisionGallery, TELEVISION_GALLERY_SLIDES)
+const televisionGallerySlides = createTelevisionGallerySlides(televisionGallery, TELEVISION_GALLERY_SLIDES)
 
 const theatreProjects = [
   {
@@ -206,7 +219,10 @@ const copy = {
     openProjectImdb: 'Открыть проект в IMDb',
     trailerLabel: 'Трейлер',
     galleryLabel: 'Фото спектакля',
+    theatreGalleryLabel: 'Фото со спектакля',
+    theatreGalleryHint: 'нажмите на фото для увеличения',
     televisionGalleryLabel: 'Фото со съёмок',
+    televisionGalleryHint: 'нажмите на фото для увеличения',
     openPhotoLabel: 'Открыть фото',
     closeGalleryLabel: 'Закрыть галерею',
     previousPhotoLabel: 'Предыдущее фото',
@@ -286,7 +302,10 @@ const copy = {
     openProjectImdb: 'Open project on IMDb',
     trailerLabel: 'Trailer',
     galleryLabel: 'Production photos',
+    theatreGalleryLabel: 'Production photos',
+    theatreGalleryHint: 'click photo to enlarge',
     televisionGalleryLabel: 'Behind-the-scenes photos',
+    televisionGalleryHint: 'click photo to enlarge',
     openPhotoLabel: 'Open photo',
     closeGalleryLabel: 'Close gallery',
     previousPhotoLabel: 'Previous photo',
@@ -406,10 +425,6 @@ function Hero({ language, onLanguageChange, t }) {
       <a className="scroll-cue" href="#works" aria-label={t.nextLabel}><span />{t.next}</a>
     </section>
   )
-}
-
-function formatCountRange(count) {
-  return `01—${String(count).padStart(2, '0')}`
 }
 
 function CinemaProjects({ t }) {
@@ -579,7 +594,10 @@ function TheatreProjects({ language, t }) {
                   </div>
                   <div className="project-trailer-label gallery-label">
                     <p>
-                      <span>{t.galleryLabel}</span>
+                      <span>
+                        {t.theatreGalleryLabel}
+                        <span className="gallery-label-hint"> - {t.theatreGalleryHint}</span>
+                      </span>
                       <span>{String(activeGallerySlide + 1).padStart(2, '0')} / {String(gallerySlides.length).padStart(2, '0')}</span>
                     </p>
                   </div>
@@ -652,6 +670,11 @@ function TelevisionProjects({ t }) {
   const [lightbox, setLightbox] = useState(null)
   const lightboxPhoto = lightbox ? televisionGallery[lightbox.photoIndex] : null
   const visibleGalleryPhotos = televisionGallerySlides[activeGallerySlide] ?? []
+  const showGallerySlide = useCallback((direction) => {
+    setActiveGallerySlide((current) => (
+      (current + direction + televisionGallerySlides.length) % televisionGallerySlides.length
+    ))
+  }, [])
 
   const showLightboxPhoto = useCallback((direction) => {
     setLightbox((current) => {
@@ -662,16 +685,6 @@ function TelevisionProjects({ t }) {
       }
     })
   }, [])
-
-  useEffect(() => {
-    if (lightbox || televisionGallerySlides.length < 2) return undefined
-
-    const timer = window.setInterval(() => {
-      setActiveGallerySlide((current) => (current + 1) % televisionGallerySlides.length)
-    }, 2000)
-
-    return () => window.clearInterval(timer)
-  }, [lightbox])
 
   useEffect(() => {
     if (!lightbox) return undefined
@@ -707,7 +720,7 @@ function TelevisionProjects({ t }) {
           >
             {visibleGalleryPhotos.map((photo) => (
               <button
-                className="gallery-tile television-gallery-tile"
+                className={`gallery-tile television-gallery-tile television-gallery-tile--${photo.number}`}
                 key={photo.src}
                 type="button"
                 onClick={() => setLightbox({ photoIndex: photo.index })}
@@ -718,9 +731,27 @@ function TelevisionProjects({ t }) {
             ))}
           </div>
 
+          <button
+            className="television-gallery-nav television-gallery-nav--prev"
+            type="button"
+            onClick={() => showGallerySlide(-1)}
+            aria-label={t.previousPhotoLabel}
+          >
+            ←
+          </button>
+
+          <button
+            className="television-gallery-nav television-gallery-nav--next"
+            type="button"
+            onClick={() => showGallerySlide(1)}
+            aria-label={t.nextPhotoLabel}
+          >
+            →
+          </button>
+
           <div className="project-trailer-label gallery-label">
             <p>
-              <span>{t.televisionGalleryLabel}</span>
+              <span className="gallery-label-hint">{t.televisionGalleryHint}</span>
               <span>{String(activeGallerySlide + 1).padStart(2, '0')} / {String(televisionGallerySlides.length).padStart(2, '0')}</span>
             </p>
           </div>
@@ -805,11 +836,6 @@ function PlaceholderWorks({ activeCategory, t }) {
 function Works({ language, t }) {
   const categories = ['cinema', 'theatre', 'television']
   const [activeCategory, setActiveCategory] = useState('cinema')
-  const activeCount = activeCategory === 'cinema'
-    ? cinemaProjects.length
-    : activeCategory === 'theatre'
-      ? theatreProjects.length
-      : 1
 
   return (
     <section className="works-section" id="works">
@@ -845,7 +871,6 @@ function Works({ language, t }) {
       >
         <div className="works-panel-heading">
           <h3>{t.worksTabs[activeCategory]} / {t.worksPanelSuffix[activeCategory]}</h3>
-          <span>{formatCountRange(activeCount)}</span>
         </div>
 
         {activeCategory === 'cinema' && <CinemaProjects t={t} />}

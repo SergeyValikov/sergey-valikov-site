@@ -692,7 +692,10 @@ body.is-lightbox-open {
 }
 
 .television-gallery-card {
-  width: 100%;
+  position: relative;
+  overflow: visible;
+  width: calc(100% - clamp(104px, 10vw, 132px));
+  margin-inline: auto;
 }
 
 .television-gallery {
@@ -755,7 +758,7 @@ body.is-lightbox-open {
 }
 
 .television-gallery .gallery-tile:nth-child(2) {
-  grid-column: span 2;
+  grid-column: span 1;
   grid-row: span 1;
 }
 
@@ -781,6 +784,42 @@ body.is-lightbox-open {
   filter: contrast(1.06) saturate(1.08);
 }
 
+.television-gallery-nav {
+  position: absolute;
+  z-index: 3;
+  top: calc(50% - 24px);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(232, 229, 222, 0.42);
+  color: var(--paper);
+  background: rgba(0, 0, 0, 0.52);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 220ms ease, border-color 220ms ease, transform 220ms ease;
+}
+
+.television-gallery-nav:hover,
+.television-gallery-nav:focus-visible {
+  border-color: rgba(232, 229, 222, 0.8);
+  background: rgba(232, 229, 222, 0.12);
+}
+
+.television-gallery-nav:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.82);
+  outline-offset: 4px;
+}
+
+.television-gallery-nav--prev {
+  left: -58px;
+}
+
+.television-gallery-nav--next {
+  right: -58px;
+}
+
 .gallery-tile:focus-visible {
   position: relative;
   z-index: 2;
@@ -802,6 +841,18 @@ body.is-lightbox-open {
 
 .gallery-label p span:last-child {
   color: rgba(232, 229, 222, 0.45);
+}
+
+.gallery-label p span.gallery-label-hint:last-child,
+.gallery-label p span.gallery-label-hint {
+  color: rgba(232, 229, 222, 0.68);
+  font-size: 1em;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  white-space: normal;
+  text-shadow: 0 0 14px rgba(232, 229, 222, 0.34);
+  animation: gallery-hint-pulse 2.8s ease-in-out infinite;
 }
 
 .gallery-lightbox {
@@ -1366,6 +1417,18 @@ body.is-lightbox-open {
   }
 }
 
+@keyframes gallery-hint-pulse {
+  0%, 100% {
+    color: rgba(232, 229, 222, 0.68);
+    text-shadow: 0 0 10px rgba(232, 229, 222, 0.24);
+  }
+
+  50% {
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 0 18px rgba(232, 229, 222, 0.5);
+  }
+}
+
 @keyframes reveal-content {
   from { opacity: 0; transform: translateY(calc(-43% + 22px)); }
   to { opacity: 1; transform: translateY(-43%); }
@@ -1850,6 +1913,10 @@ html.real-mobile .button {
     margin-bottom: 14px;
   }
 
+  .television-gallery-card {
+    width: calc(100% - 104px);
+  }
+
   .television-gallery {
     aspect-ratio: auto;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1882,6 +1949,26 @@ html.real-mobile .button {
   .television-gallery .gallery-tile:nth-child(4) {
     grid-column: span 1;
     grid-row: span 1;
+  }
+
+  .television-gallery .television-gallery-tile--14 img,
+  .television-gallery .television-gallery-tile--15 img {
+    object-position: center top;
+  }
+
+  .television-gallery-nav {
+    top: calc(50% - 28px);
+    width: 50px;
+    height: 50px;
+    font-size: 19px;
+  }
+
+  .television-gallery-nav--prev {
+    left: -52px;
+  }
+
+  .television-gallery-nav--next {
+    right: -52px;
   }
 
   .gallery-lightbox {
@@ -1939,6 +2026,10 @@ html.real-mobile .television-heading {
   margin-bottom: 14px;
 }
 
+html.real-mobile .television-gallery-card {
+  width: calc(100% - 104px);
+}
+
 html.real-mobile .television-gallery {
   aspect-ratio: auto;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1971,6 +2062,26 @@ html.real-mobile .television-gallery .gallery-tile:nth-child(3),
 html.real-mobile .television-gallery .gallery-tile:nth-child(4) {
   grid-column: span 1;
   grid-row: span 1;
+}
+
+html.real-mobile .television-gallery .television-gallery-tile--14 img,
+html.real-mobile .television-gallery .television-gallery-tile--15 img {
+  object-position: center top;
+}
+
+html.real-mobile .television-gallery-nav {
+  top: calc(50% - 28px);
+  width: 50px;
+  height: 50px;
+  font-size: 19px;
+}
+
+html.real-mobile .television-gallery-nav--prev {
+  left: -52px;
+}
+
+html.real-mobile .television-gallery-nav--next {
+  right: -52px;
 }
 
 html.real-mobile .gallery-lightbox {
