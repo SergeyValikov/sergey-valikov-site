@@ -131,6 +131,33 @@ const theatreProjects = [
   },
 ]
 
+const mediaVideos = [
+  {
+    title: {
+      ru: 'Разговор о фильме «CONDUCTOR»',
+      en: 'Conversation about the film CONDUCTOR',
+    },
+    src: 'https://kinescope.io/embed/oNuy7did7YyufAggZfqx7w',
+    cover: '/media/conductor-interview-cover.png',
+  },
+  {
+    title: {
+      ru: 'Интервью о спектакле «Стеклянный зверинец»',
+      en: 'Interview about The Glass Menagerie',
+    },
+    src: 'https://kinescope.io/embed/wPzAwySSuUWSxGjvEuajwr',
+    cover: '/media/glass-menagerie-interview-cover.png',
+  },
+  {
+    title: {
+      ru: 'Диалог на "Правда Радио", г. Гомель, Белоруссия. Режиссёрская лаборатория, СТД РФ',
+      en: 'Dialogue on Pravda Radio, Gomel, Belarus. Directors Laboratory, Theatre Union of Russia',
+    },
+    src: 'https://kinescope.io/embed/vSjnMeZtLbpaR5Y5tCiCDZ',
+    cover: '/media/directors-lab-cover.png',
+  },
+]
+
 function getLocalizedText(value, language) {
   if (typeof value === 'string') return value
   return value[language] ?? value.ru ?? ''
@@ -269,7 +296,8 @@ const copy = {
     ],
     mediaEyebrow: '03 / СМИ',
     mediaTitle: 'Публикации и разговоры',
-    mediaCopy: 'Материалы скоро появятся.',
+    mediaCopy: 'Видеоинтервью и разговоры.',
+    mediaVideoOpenLabel: 'Открыть видео',
     contactEyebrow: '04 / Контакты',
     contactTitle: 'Начать разговор',
     contactCopy: 'Контактные данные скоро появятся',
@@ -352,7 +380,8 @@ const copy = {
     ],
     mediaEyebrow: '03 / Press',
     mediaTitle: 'Publications and conversations',
-    mediaCopy: 'Materials coming soon.',
+    mediaCopy: 'Video interviews and conversations.',
+    mediaVideoOpenLabel: 'Open video',
     contactEyebrow: '04 / Contact',
     contactTitle: 'Start a conversation',
     contactCopy: 'Contact details coming soon',
@@ -897,13 +926,49 @@ function About({ t }) {
   )
 }
 
-function Media({ t }) {
+function Media({ language, t }) {
+  const [activeVideo, setActiveVideo] = useState(null)
+
   return (
     <section className="media-section" id="media">
       <p className="eyebrow">{t.mediaEyebrow}</p>
       <div className="media-main">
         <h2>{t.mediaTitle}</h2>
-        <p>{t.mediaCopy}</p>
+
+        <div className="media-video-grid">
+          {mediaVideos.map((video, index) => {
+            const videoTitle = getLocalizedText(video.title, language)
+            const isActive = activeVideo?.src === video.src
+            const videoSrc = `${video.src}?autoplay=1&start=0&t=0&reset=${activeVideo?.reset ?? ''}`
+
+            return (
+              <article className="media-video-card" key={video.src}>
+                <h3>{videoTitle}</h3>
+                <div className="media-video-frame">
+                  {isActive ? (
+                    <iframe
+                      src={videoSrc}
+                      title={videoTitle}
+                      allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock"
+                      allowFullScreen
+                      loading="lazy"
+                    />
+                  ) : (
+                    <button
+                      className="media-video-cover"
+                      type="button"
+                      onClick={() => setActiveVideo({ src: video.src, reset: Date.now() })}
+                      aria-label={`${t.mediaVideoOpenLabel} ${index + 1}: ${videoTitle}`}
+                    >
+                      <img src={video.cover} alt="" loading="lazy" />
+                      <span aria-hidden="true">▶</span>
+                    </button>
+                  )}
+                </div>
+              </article>
+            )
+          })}
+        </div>
       </div>
     </section>
   )
@@ -947,7 +1012,7 @@ function App() {
         <Hero language={language} onLanguageChange={toggleLanguage} t={t} />
         <Works language={language} t={t} />
         <About t={t} />
-        <Media t={t} />
+        <Media language={language} t={t} />
         <Contact t={t} />
       </main>
       <MobileDebug />
