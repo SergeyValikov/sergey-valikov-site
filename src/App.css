@@ -712,9 +712,7 @@ body.is-lightbox-open {
 
 .television-gallery-card {
   position: relative;
-  overflow: visible;
-  width: calc(100% - clamp(104px, 10vw, 132px));
-  margin-inline: auto;
+  width: 100%;
 }
 
 .television-gallery {
@@ -801,42 +799,6 @@ body.is-lightbox-open {
 .television-gallery .gallery-tile:hover img,
 .television-gallery .gallery-tile:focus-visible img {
   filter: contrast(1.06) saturate(1.08);
-}
-
-.television-gallery-nav {
-  position: absolute;
-  z-index: 3;
-  top: calc(50% - 24px);
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid rgba(232, 229, 222, 0.42);
-  color: var(--paper);
-  background: rgba(0, 0, 0, 0.52);
-  font-size: 18px;
-  line-height: 1;
-  cursor: pointer;
-  transition: background 220ms ease, border-color 220ms ease, transform 220ms ease;
-}
-
-.television-gallery-nav:hover,
-.television-gallery-nav:focus-visible {
-  border-color: rgba(232, 229, 222, 0.8);
-  background: rgba(232, 229, 222, 0.12);
-}
-
-.television-gallery-nav:focus-visible {
-  outline: 1px solid rgba(255, 255, 255, 0.82);
-  outline-offset: 4px;
-}
-
-.television-gallery-nav--prev {
-  left: -58px;
-}
-
-.television-gallery-nav--next {
-  right: -58px;
 }
 
 .gallery-tile:focus-visible {
@@ -1380,6 +1342,14 @@ body.is-lightbox-open {
   height: 0.55em;
   flex: 0 0 auto;
   object-fit: contain;
+}
+
+.contact-icon--mail {
+  width: auto;
+  height: auto;
+  display: inline-block;
+  line-height: 1;
+  transform: translateY(-0.03em);
 }
 
 .contact-icon--telegram {
@@ -1932,10 +1902,6 @@ html.real-mobile .button {
     margin-bottom: 14px;
   }
 
-  .television-gallery-card {
-    width: calc(100% - 104px);
-  }
-
   .television-gallery {
     aspect-ratio: auto;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1973,21 +1939,6 @@ html.real-mobile .button {
   .television-gallery .television-gallery-tile--14 img,
   .television-gallery .television-gallery-tile--15 img {
     object-position: center top;
-  }
-
-  .television-gallery-nav {
-    top: calc(50% - 28px);
-    width: 50px;
-    height: 50px;
-    font-size: 19px;
-  }
-
-  .television-gallery-nav--prev {
-    left: -52px;
-  }
-
-  .television-gallery-nav--next {
-    right: -52px;
   }
 
   .gallery-lightbox {
@@ -2045,10 +1996,6 @@ html.real-mobile .television-heading {
   margin-bottom: 14px;
 }
 
-html.real-mobile .television-gallery-card {
-  width: calc(100% - 104px);
-}
-
 html.real-mobile .television-gallery {
   aspect-ratio: auto;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2086,21 +2033,6 @@ html.real-mobile .television-gallery .gallery-tile:nth-child(4) {
 html.real-mobile .television-gallery .television-gallery-tile--14 img,
 html.real-mobile .television-gallery .television-gallery-tile--15 img {
   object-position: center top;
-}
-
-html.real-mobile .television-gallery-nav {
-  top: calc(50% - 28px);
-  width: 50px;
-  height: 50px;
-  font-size: 19px;
-}
-
-html.real-mobile .television-gallery-nav--prev {
-  left: -52px;
-}
-
-html.real-mobile .television-gallery-nav--next {
-  right: -52px;
 }
 
 html.real-mobile .gallery-lightbox {
@@ -2212,6 +2144,10 @@ html.real-mobile .project-heading h4 {
   font-size: clamp(44px, 14vw, 58px);
 }
 
+html.real-mobile .television-heading h4 {
+  line-height: 0.9;
+}
+
 html.real-mobile .project-links,
 html.real-mobile .project-trailer-label {
   align-items: flex-start;
@@ -2224,6 +2160,15 @@ html.real-mobile .project-links p,
 html.real-mobile .project-trailer-label p {
   font-size: 9px;
   letter-spacing: 0.22em;
+}
+
+html.real-mobile .theatre-gallery-card .gallery-label p > span:first-child {
+  display: grid;
+  gap: 8px;
+}
+
+html.real-mobile .theatre-gallery-card .gallery-label-hint {
+  display: block;
 }
 
 html.real-mobile .imdb-link {
@@ -2383,6 +2328,22 @@ html.real-mobile .contact-main h2 {
 html.real-mobile .contact-placeholder {
   font-size: 30px;
   gap: 12px;
+}
+
+html.real-mobile .contact-placeholder a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.38em;
+  max-width: 100%;
+}
+
+html.real-mobile .contact-placeholder a span:last-child {
+  min-width: 0;
+}
+
+html.real-mobile .contact-icon {
+  align-self: center;
 }
 
 html.real-mobile .footer-line {

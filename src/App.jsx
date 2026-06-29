@@ -670,11 +670,6 @@ function TelevisionProjects({ t }) {
   const [lightbox, setLightbox] = useState(null)
   const lightboxPhoto = lightbox ? televisionGallery[lightbox.photoIndex] : null
   const visibleGalleryPhotos = televisionGallerySlides[activeGallerySlide] ?? []
-  const showGallerySlide = useCallback((direction) => {
-    setActiveGallerySlide((current) => (
-      (current + direction + televisionGallerySlides.length) % televisionGallerySlides.length
-    ))
-  }, [])
 
   const showLightboxPhoto = useCallback((direction) => {
     setLightbox((current) => {
@@ -685,6 +680,16 @@ function TelevisionProjects({ t }) {
       }
     })
   }, [])
+
+  useEffect(() => {
+    if (lightbox || televisionGallerySlides.length < 2) return undefined
+
+    const timer = window.setInterval(() => {
+      setActiveGallerySlide((current) => (current + 1) % televisionGallerySlides.length)
+    }, 3000)
+
+    return () => window.clearInterval(timer)
+  }, [lightbox])
 
   useEffect(() => {
     if (!lightbox) return undefined
@@ -730,24 +735,6 @@ function TelevisionProjects({ t }) {
               </button>
             ))}
           </div>
-
-          <button
-            className="television-gallery-nav television-gallery-nav--prev"
-            type="button"
-            onClick={() => showGallerySlide(-1)}
-            aria-label={t.previousPhotoLabel}
-          >
-            ←
-          </button>
-
-          <button
-            className="television-gallery-nav television-gallery-nav--next"
-            type="button"
-            onClick={() => showGallerySlide(1)}
-            aria-label={t.nextPhotoLabel}
-          >
-            →
-          </button>
 
           <div className="project-trailer-label gallery-label">
             <p>
@@ -929,7 +916,7 @@ function Contact({ t }) {
       <div className="contact-main">
         <h2>{t.contactTitle}</h2>
         <p className="contact-placeholder">
-          <a href="mailto:valikovdirector@gmail.com">✉ valikovdirector@gmail.com</a>
+          <a href="mailto:valikovdirector@gmail.com"><span className="contact-icon contact-icon--mail" aria-hidden="true">✉</span><span>valikovdirector@gmail.com</span></a>
           <a href="https://t.me/sergeyvalikov" target="_blank" rel="noreferrer"><img className="contact-icon contact-icon--telegram" src="/icons/telegram.svg" alt="" aria-hidden="true" /> sergeyvalikov</a>
         </p>
       </div>
