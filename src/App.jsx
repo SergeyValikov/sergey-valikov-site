@@ -392,6 +392,15 @@ const copy = {
 }
 
 function Header({ language, onLanguageChange, t }) {
+  const handleNavigationClick = (event, href) => {
+    const target = document.querySelector(href)
+    if (!target) return
+
+    event.preventDefault()
+    window.history.pushState(null, '', href)
+    target.scrollIntoView({ block: 'start', behavior: 'smooth' })
+  }
+
   return (
     <header className="site-header">
       <button
@@ -405,7 +414,7 @@ function Header({ language, onLanguageChange, t }) {
 
       <nav className="site-nav" aria-label={t.navLabel}>
         {navigationTargets.map(([key, href]) => (
-          <a key={href} href={href}>{t.nav[key]}</a>
+          <a key={href} href={href} onClick={(event) => handleNavigationClick(event, href)}>{t.nav[key]}</a>
         ))}
       </nav>
     </header>
@@ -939,7 +948,7 @@ function Media({ language, t }) {
           {mediaVideos.map((video, index) => {
             const videoTitle = getLocalizedText(video.title, language)
             const isActive = activeVideo?.src === video.src
-            const videoSrc = `${video.src}?autoplay=1&start=0&t=0&reset=${activeVideo?.reset ?? ''}`
+            const videoSrc = `${video.src}?autoplay=1&playsinline=1&start=0&t=0&reset=${activeVideo?.reset ?? ''}`
 
             return (
               <article className="media-video-card" key={video.src}>
@@ -961,7 +970,7 @@ function Media({ language, t }) {
                       aria-label={`${t.mediaVideoOpenLabel} ${index + 1}: ${videoTitle}`}
                     >
                       <img src={video.cover} alt="" loading="lazy" />
-                      <span aria-hidden="true">▶</span>
+                      <span aria-hidden="true" />
                     </button>
                   )}
                 </div>
