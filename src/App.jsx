@@ -222,7 +222,8 @@ function MobileDebug() {
 
 const copy = {
   ru: {
-    pageTitle: 'Сергей Валиков — режиссёр',
+    pageTitle: 'Сергей Валиков — режиссёр | Официальный сайт',
+    pageDescription: 'Сергей Валиков — режиссёр театра, кино и телевидения. Официальный сайт: биография, фильмы, спектакли, трейлеры, фотографии и видеоинтервью.',
     homeLabel: 'Сергей Валиков — на главную',
     navLabel: 'Основная навигация',
     languageLabel: 'Переключить сайт на английский язык',
@@ -306,7 +307,8 @@ const copy = {
     backToTop: 'Наверх ↑',
   },
   en: {
-    pageTitle: 'Sergey Valikov — Director',
+    pageTitle: 'Sergey Valikov — Director | Official Website',
+    pageDescription: 'Sergey Valikov is a theatre, film and television director. Official website: biography, films, stage productions, trailers, photographs and video interviews.',
     homeLabel: 'Sergey Valikov — home',
     navLabel: 'Main navigation',
     languageLabel: 'Switch the website to Russian',
@@ -1011,7 +1013,22 @@ function App() {
     window.localStorage.setItem('site-language', language)
     document.documentElement.lang = language
     document.title = t.pageTitle
-  }, [language, t.pageTitle])
+
+    const metadata = [
+      ['name', 'description', t.pageDescription],
+      ['property', 'og:title', t.pageTitle],
+      ['property', 'og:description', t.pageDescription],
+      ['property', 'og:locale', language === 'en' ? 'en_US' : 'ru_RU'],
+      ['property', 'og:image:alt', t.portraitAlt],
+      ['name', 'twitter:title', t.pageTitle],
+      ['name', 'twitter:description', t.pageDescription],
+      ['name', 'twitter:image:alt', t.portraitAlt],
+    ]
+
+    metadata.forEach(([attribute, key, content]) => {
+      document.head.querySelector(`meta[${attribute}="${key}"]`)?.setAttribute('content', content)
+    })
+  }, [language, t.pageTitle, t.pageDescription, t.portraitAlt])
 
   const toggleLanguage = () => setLanguage((current) => current === 'ru' ? 'en' : 'ru')
 
