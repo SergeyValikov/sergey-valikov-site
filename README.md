@@ -1,16 +1,36 @@
-# React + Vite
+# Официальный сайт Сергея Валикова
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite, статическая генерация русской (`/`) и английской (`/en/`) страниц. Серверное приложение на хостинге не требуется.
 
-Currently, two official plugins are available:
+Установка зависимостей:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```sh
+npm ci
+```
 
-## React Compiler
+Разработка:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```sh
+npm run dev
+```
 
-## Expanding the ESLint configuration
+В режиме разработки React отображает страницу на языке текущего адреса. Готовый HTML для поисковых роботов создаётся производственной сборкой:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```sh
+npm run build
+```
+
+Проверка результата сборки и локальный просмотр:
+
+```sh
+npm test
+npm run preview
+```
+
+В `dist/` создаются `index.html`, `en/index.html`, `robots.txt`, `sitemap.xml` и общие ресурсы. `npm test` запускается после сборки и проверяет уже созданный HTML.
+
+`scripts/build.mjs` сначала собирает браузерный код Vite, затем временно собирает `src/entry-server.jsx`, генерирует обе страницы из существующих React-компонентов и удаляет временный серверный модуль. В браузере `src/main.jsx` подключает React к готовой разметке через `hydrateRoot`.
+
+Все существующие переводы находятся в `src/content.js`. Языковые адреса и обработка старых ссылок `?lang=ru/en` — в `src/i18n.js`, метаданные и JSON-LD — в `src/seo.js`. Язык URL имеет приоритет над localStorage.
+
+Подробности реализации и результаты проверок: [SSG-REPORT.md](SSG-REPORT.md).

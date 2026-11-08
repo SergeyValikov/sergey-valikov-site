@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { copy } from './content.js'
+import { languagePaths } from './i18n.js'
+import { applyPageMetadata } from './seo.js'
 import './App.css'
 
 const GALLERY_SLIDE_SIZE = 6
@@ -220,177 +223,17 @@ function MobileDebug() {
   )
 }
 
-const copy = {
-  ru: {
-    pageTitle: 'Сергей Валиков — режиссёр | Официальный сайт',
-    pageDescription: 'Сергей Валиков — режиссёр театра, кино и телевидения. Официальный сайт: биография, фильмы, спектакли, трейлеры, фотографии и видеоинтервью.',
-    homeLabel: 'Сергей Валиков — на главную',
-    navLabel: 'Основная навигация',
-    languageLabel: 'Переключить сайт на английский язык',
-    nav: { about: 'О режиссёре', contact: 'Контакты', media: 'СМИ' },
-    role: 'режиссёр',
-    firstName: 'Сергей',
-    lastName: 'Валиков',
-    portraitAlt: 'Портрет режиссёра Сергея Валикова',
-    heroLabel: 'Сергей Валиков — режиссёр',
-    worksButton: 'Работы',
-    contactButton: 'Связаться',
-    authorView: 'Авторский взгляд',
-    next: 'далее',
-    nextLabel: 'Перейти к работам',
-    worksEyebrow: '01 / Работы',
-    worksTitle: 'Работы',
-    worksTabs: { cinema: 'Кино', theatre: 'Театр', television: 'Телевидение' },
-    worksPanelSuffix: { cinema: 'проекты', theatre: 'постановки', television: 'фото со съёмок' },
-    worksVisualLabel: { cinema: 'Плакат кинопроекта', theatre: 'Плакат спектакля', television: 'Фото со съёмок' },
-    worksPreviewLabel: { cinema: 'Кадры или трейлер кинопроекта', theatre: 'Фото или видеозапись спектакля' },
-    openProjectImdb: 'Открыть проект в IMDb',
-    trailerLabel: 'Трейлер',
-    galleryLabel: 'Фото спектакля',
-    theatreGalleryLabel: 'Фото со спектакля',
-    theatreGalleryHint: 'нажмите на фото для увеличения',
-    televisionGalleryLabel: 'Фото со съёмок',
-    televisionGalleryHint: 'нажмите на фото для увеличения',
-    openPhotoLabel: 'Открыть фото',
-    closeGalleryLabel: 'Закрыть галерею',
-    previousPhotoLabel: 'Предыдущее фото',
-    nextPhotoLabel: 'Следующее фото',
-    photoCounter: 'фото',
-    comingSoon: 'Скоро',
-    aboutEyebrow: '02 / О режиссёре',
-    aboutParagraphs: [
-      'Сергей Сергеевич Валиков — режиссёр драмы, выпускник режиссёрского факультета Театрального института имени Бориса Щукина при Государственном академическом театре имени Евгения Вахтангова, город Москва.',
-      'Работает в области театра, кино и телевидения.',
-      'В начале профессионального пути служил артистом драматического театра. Позже много путешествовал как по России, так и за рубежом, искал новые средства выражения своих творческих идей и в итоге пришёл к режиссуре.',
-      'В своих спектаклях самостоятельно создаёт сценографию, художественное и музыкальное оформление, а также пишет сценарии и инсценировки для собственных работ.',
-    ],
-    aboutTeachersTitle: 'Главные учителя на пути к профессии:',
-    aboutTeachers: [
-      {
-        name: 'Юрий Николаевич Погребничко',
-        description: 'Народный артист РФ, заслуженный деятель искусств РФ, лауреат Государственной премии РФ и премии «Золотая маска»; режиссёр, педагог, художественный руководитель театра «Около дома Станиславского» — театра, отмеченного тремя премиями «Золотая маска».',
-      },
-      {
-        name: 'Алексей Витальевич Курганов',
-        description: 'Актёр театра и кино, театральный режиссёр, педагог, кандидат филологических наук.',
-      },
-      {
-        name: 'Валерий Октябринович Журавлёв',
-        description: 'Заслуженный артист РФ.',
-      },
-      {
-        name: 'Султан Назирович Абдиев',
-        description: 'Заслуженный деятель искусств РФ, театральный режиссёр, ученик Марка Захарова.',
-      },
-      {
-        name: 'Александр Александрович Водопьянов',
-        description: 'Заслуженный артист РФ.',
-      },
-      {
-        name: 'Михаил Петрович Семаков',
-        description: 'Заслуженный артист РФ, профессор кафедры мастерства актёра, кандидат педагогических наук.',
-      },
-      {
-        name: 'Елена Александровна Дунаева',
-        description: 'Доктор искусствоведения, профессор, заведующая кафедрой искусствоведения Театрального института имени Бориса Щукина.',
-      },
-    ],
-    mediaEyebrow: '03 / СМИ',
-    mediaTitle: 'Публикации и разговоры',
-    mediaCopy: 'Видеоинтервью и разговоры.',
-    mediaVideoOpenLabel: 'Открыть видео',
-    contactEyebrow: '04 / Контакты',
-    contactTitle: 'Начать разговор',
-    contactCopy: 'Контактные данные скоро появятся',
-    footerName: 'Сергей Валиков',
-    footerRole: 'Режиссёр',
-    backToTop: 'Наверх ↑',
-  },
-  en: {
-    pageTitle: 'Sergey Valikov — Director | Official Website',
-    pageDescription: 'Sergey Valikov is a theatre, film and television director. Official website: biography, films, stage productions, trailers, photographs and video interviews.',
-    homeLabel: 'Sergey Valikov — home',
-    navLabel: 'Main navigation',
-    languageLabel: 'Switch the website to Russian',
-    nav: { about: 'About', contact: 'Contact', media: 'Press' },
-    role: 'director',
-    firstName: 'Sergey',
-    lastName: 'Valikov',
-    portraitAlt: 'Portrait of director Sergey Valikov',
-    heroLabel: 'Sergey Valikov — Director',
-    worksButton: 'Works',
-    contactButton: 'Contact',
-    authorView: "Author's view",
-    next: 'next',
-    nextLabel: 'Go to works',
-    worksEyebrow: '01 / Works',
-    worksTitle: 'Works',
-    worksTabs: { cinema: 'Film', theatre: 'Theatre', television: 'Television' },
-    worksPanelSuffix: { cinema: 'projects', theatre: 'productions', television: 'behind-the-scenes photos' },
-    worksVisualLabel: { cinema: 'Film project poster', theatre: 'Theatre poster', television: 'Behind-the-scenes photo' },
-    worksPreviewLabel: { cinema: 'Film stills or trailer', theatre: 'Production photos or video' },
-    openProjectImdb: 'Open project on IMDb',
-    trailerLabel: 'Trailer',
-    galleryLabel: 'Production photos',
-    theatreGalleryLabel: 'Production photos',
-    theatreGalleryHint: 'click photo to enlarge',
-    televisionGalleryLabel: 'Behind-the-scenes photos',
-    televisionGalleryHint: 'click photo to enlarge',
-    openPhotoLabel: 'Open photo',
-    closeGalleryLabel: 'Close gallery',
-    previousPhotoLabel: 'Previous photo',
-    nextPhotoLabel: 'Next photo',
-    photoCounter: 'photo',
-    comingSoon: 'Soon',
-    aboutEyebrow: '02 / About',
-    aboutParagraphs: [
-      'Sergey Sergeevich Valikov is a drama director and a graduate of the directing department of the Boris Shchukin Theatre Institute at the Evgeny Vakhtangov State Academic Theatre, Moscow.',
-      'He works in theatre, film, and television.',
-      'At the beginning of his professional path, he served as an actor in a drama theatre. Later, he travelled extensively across Russia and abroad, searching for new means of expressing his creative ideas, and eventually came to directing.',
-      'In his productions, he independently creates the scenography, artistic and musical design, and also writes scripts and stage adaptations for his own works.',
-    ],
-    aboutTeachersTitle: 'Key teachers on the path to the profession:',
-    aboutTeachers: [
-      {
-        name: 'Yury Nikolaevich Pogrebnichko',
-        description: 'People’s Artist of the Russian Federation, Honored Art Worker of the Russian Federation, laureate of the State Prize of the Russian Federation and the Golden Mask Award; director, teacher, and artistic director of the Okolo Theatre near the Stanislavsky House — a theatre awarded three Golden Mask prizes.',
-      },
-      {
-        name: 'Alexey Vitalievich Kurganov',
-        description: 'Theatre and film actor, theatre director, teacher, Candidate of Philological Sciences.',
-      },
-      {
-        name: 'Valery Oktyabrinovich Zhuravlyov',
-        description: 'Honored Artist of the Russian Federation.',
-      },
-      {
-        name: 'Sultan Nazirovich Abdiev',
-        description: 'Honored Art Worker of the Russian Federation, theatre director, student of Mark Zakharov.',
-      },
-      {
-        name: 'Alexander Alexandrovich Vodopyanov',
-        description: 'Honored Artist of the Russian Federation.',
-      },
-      {
-        name: 'Mikhail Petrovich Semakov',
-        description: 'Honored Artist of the Russian Federation, professor of the Department of Acting, Candidate of Pedagogical Sciences.',
-      },
-      {
-        name: 'Elena Alexandrovna Dunaeva',
-        description: 'Doctor of Art History, professor, head of the Department of Art History at the Boris Shchukin Theatre Institute.',
-      },
-    ],
-    mediaEyebrow: '03 / Press',
-    mediaTitle: 'Publications and conversations',
-    mediaCopy: 'Video interviews and conversations.',
-    mediaVideoOpenLabel: 'Open video',
-    contactEyebrow: '04 / Contact',
-    contactTitle: 'Start a conversation',
-    contactCopy: 'Contact details coming soon',
-    footerName: 'Sergey Valikov',
-    footerRole: 'Director',
-    backToTop: 'Back to top ↑',
-  },
+function ClientDebug() {
+  const [showDebug, setShowDebug] = useState(false)
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('debug') !== '1') return undefined
+
+    const frame = window.requestAnimationFrame(() => setShowDebug(true))
+    return () => window.cancelAnimationFrame(frame)
+  }, [])
+
+  return showDebug ? <MobileDebug /> : null
 }
 
 function Header({ language, onLanguageChange, t }) {
@@ -467,7 +310,7 @@ function Hero({ language, onLanguageChange, t }) {
   )
 }
 
-function CinemaProjects({ t }) {
+function CinemaProjects({ t, isActive }) {
   return (
     <div className="cinema-projects">
       {cinemaProjects.map((project, index) => (
@@ -508,7 +351,7 @@ function CinemaProjects({ t }) {
                   <video
                     src={project.trailer}
                     poster={project.trailerPoster}
-                    preload="metadata"
+                    preload={isActive ? 'metadata' : 'none'}
                     controls
                     playsInline
                     aria-label={`${project.title} — ${t.trailerLabel}`}
@@ -526,7 +369,7 @@ function CinemaProjects({ t }) {
   )
 }
 
-function TheatreProjects({ language, t }) {
+function TheatreProjects({ language, t, isActive }) {
   const [lightbox, setLightbox] = useState(null)
   const [gallerySlideByProject, setGallerySlideByProject] = useState({})
   const lightboxProject = lightbox ? theatreProjects[lightbox.projectIndex] : null
@@ -549,7 +392,7 @@ function TheatreProjects({ language, t }) {
   }, [])
 
   useEffect(() => {
-    if (lightbox) return undefined
+    if (!isActive || lightbox) return undefined
 
     const timer = window.setInterval(() => {
       setGallerySlideByProject((current) => {
@@ -569,7 +412,7 @@ function TheatreProjects({ language, t }) {
     }, 3000)
 
     return () => window.clearInterval(timer)
-  }, [lightbox])
+  }, [isActive, lightbox])
 
   useEffect(() => {
     if (!lightbox) return undefined
@@ -648,7 +491,7 @@ function TheatreProjects({ language, t }) {
                     <video
                       src={project.trailer}
                       poster={project.trailerPoster}
-                      preload="metadata"
+                      preload={isActive ? 'metadata' : 'none'}
                       controls
                       playsInline
                       aria-label={`${projectTitle} — ${t.trailerLabel}`}
@@ -705,7 +548,7 @@ function TheatreProjects({ language, t }) {
   )
 }
 
-function TelevisionProjects({ t }) {
+function TelevisionProjects({ t, isActive }) {
   const [activeGallerySlide, setActiveGallerySlide] = useState(0)
   const [lightbox, setLightbox] = useState(null)
   const lightboxPhoto = lightbox ? televisionGallery[lightbox.photoIndex] : null
@@ -722,14 +565,14 @@ function TelevisionProjects({ t }) {
   }, [])
 
   useEffect(() => {
-    if (lightbox || televisionGallerySlides.length < 2) return undefined
+    if (!isActive || lightbox || televisionGallerySlides.length < 2) return undefined
 
     const timer = window.setInterval(() => {
       setActiveGallerySlide((current) => (current + 1) % televisionGallerySlides.length)
     }, 4000)
 
     return () => window.clearInterval(timer)
-  }, [lightbox])
+  }, [isActive, lightbox])
 
   useEffect(() => {
     if (!lightbox) return undefined
@@ -879,7 +722,7 @@ function Works({ language, t }) {
             key={category}
             type="button"
             role="tab"
-            aria-controls="works-panel"
+            aria-controls={`works-panel-${category}`}
             aria-selected={activeCategory === category}
             onClick={() => setActiveCategory(category)}
           >
@@ -889,21 +732,28 @@ function Works({ language, t }) {
         ))}
       </div>
 
-      <div
-        className={`works-panel works-panel--${activeCategory}`}
-        id="works-panel"
-        role="tabpanel"
-        aria-labelledby={`works-tab-${activeCategory}`}
-        key={activeCategory}
-      >
-        <div className="works-panel-heading">
-          <h3>{t.worksTabs[activeCategory]} / {t.worksPanelSuffix[activeCategory]}</h3>
-        </div>
+      {categories.map((category) => {
+        const isActive = activeCategory === category
 
-        {activeCategory === 'cinema' && <CinemaProjects t={t} />}
-        {activeCategory === 'theatre' && <TheatreProjects language={language} t={t} />}
-        {activeCategory === 'television' && <TelevisionProjects t={t} />}
-      </div>
+        return (
+          <div
+            className={`works-panel works-panel--${category}`}
+            id={`works-panel-${category}`}
+            role="tabpanel"
+            aria-labelledby={`works-tab-${category}`}
+            hidden={!isActive}
+            key={`${activeCategory}-${category}`}
+          >
+            <div className="works-panel-heading">
+              <h3>{t.worksTabs[category]} / {t.worksPanelSuffix[category]}</h3>
+            </div>
+
+            {category === 'cinema' && <CinemaProjects t={t} isActive={isActive} />}
+            {category === 'theatre' && <TheatreProjects language={language} t={t} isActive={isActive} />}
+            {category === 'television' && <TelevisionProjects t={t} isActive={isActive} />}
+          </div>
+        )
+      })}
     </section>
   )
 }
@@ -1001,47 +851,32 @@ function Contact({ t }) {
   )
 }
 
-function App() {
-  const [language, setLanguage] = useState(() => {
-    const requestedLanguage = new URLSearchParams(window.location.search).get('lang')
-    if (requestedLanguage === 'en' || requestedLanguage === 'ru') return requestedLanguage
-    return window.localStorage.getItem('site-language') === 'en' ? 'en' : 'ru'
-  })
+function App({ language = 'ru' }) {
   const t = copy[language]
 
   useEffect(() => {
-    window.localStorage.setItem('site-language', language)
-    document.documentElement.lang = language
-    document.title = t.pageTitle
+    try {
+      window.localStorage.setItem('site-language', language)
+    } catch {
+      // The URL remains authoritative when browser storage is unavailable.
+    }
+    applyPageMetadata(language)
+  }, [language])
 
-    const metadata = [
-      ['name', 'description', t.pageDescription],
-      ['property', 'og:title', t.pageTitle],
-      ['property', 'og:description', t.pageDescription],
-      ['property', 'og:locale', language === 'en' ? 'en_US' : 'ru_RU'],
-      ['property', 'og:image:alt', t.portraitAlt],
-      ['name', 'twitter:title', t.pageTitle],
-      ['name', 'twitter:description', t.pageDescription],
-      ['name', 'twitter:image:alt', t.portraitAlt],
-    ]
-
-    metadata.forEach(([attribute, key, content]) => {
-      document.head.querySelector(`meta[${attribute}="${key}"]`)?.setAttribute('content', content)
-    })
-  }, [language, t.pageTitle, t.pageDescription, t.portraitAlt])
-
-  const toggleLanguage = () => setLanguage((current) => current === 'ru' ? 'en' : 'ru')
+  const navigateLanguage = () => {
+    window.location.assign(languagePaths[language === 'ru' ? 'en' : 'ru'])
+  }
 
   return (
     <>
       <main>
-        <Hero language={language} onLanguageChange={toggleLanguage} t={t} />
+        <Hero language={language} onLanguageChange={navigateLanguage} t={t} />
         <Works language={language} t={t} />
         <About t={t} />
         <Media language={language} t={t} />
         <Contact t={t} />
       </main>
-      <MobileDebug />
+      <ClientDebug />
     </>
   )
 }
