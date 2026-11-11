@@ -3,7 +3,7 @@
   --ink: #0a0a0a;
   --line: rgba(232, 229, 222, 0.22);
   --display: "Iowan Old Style", "Baskerville", "Times New Roman", serif;
-  --portrait-filter: grayscale(1) contrast(1.03) brightness(0.76);
+  --portrait-tone: contrast(1.03) brightness(0.76);
   --portrait-overlay:
     linear-gradient(90deg, rgba(5, 5, 5, 0.78) 0%, rgba(5, 5, 5, 0.5) 31%, rgba(5, 5, 5, 0.08) 61%, rgba(5, 5, 5, 0.08) 100%),
     linear-gradient(0deg, rgba(3, 3, 3, 0.72) 0%, transparent 34%),
@@ -60,10 +60,14 @@ body.is-lightbox-open {
   max-width: none;
   object-fit: cover;
   object-position: right center;
-  filter: var(--portrait-filter);
+  filter: var(--portrait-tone);
   transform: scale(1.005);
   transform-origin: 72% center;
-  animation: image-parallax 26s ease-in-out infinite alternate;
+}
+
+.hero-image--color {
+  opacity: 0;
+  animation: portrait-crossfade 13s ease-in-out infinite;
 }
 
 .hero-overlay {
@@ -161,6 +165,8 @@ body.is-lightbox-open {
 }
 
 .hero-content {
+  --kinopoisk-button-height: 34px;
+  --kinopoisk-button-gap: 8px;
   position: absolute;
   z-index: 6;
   left: clamp(34px, 8.3vw, 128px);
@@ -264,6 +270,7 @@ body.is-lightbox-open {
 }
 
 .hero-actions {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -294,6 +301,24 @@ body.is-lightbox-open {
   color: #111;
   background: rgba(236, 233, 226, 0.94);
   border-color: transparent;
+}
+
+.button-kinopoisk {
+  position: absolute;
+  top: calc(100% + var(--kinopoisk-button-gap));
+  left: 0;
+  min-width: 0;
+  height: var(--kinopoisk-button-height);
+  padding: 0 14px;
+  gap: 12px;
+  color: rgba(232, 229, 222, 0.84);
+  border-color: rgba(239, 237, 232, 0.32);
+}
+
+.button-kinopoisk:hover,
+.button-kinopoisk:focus-visible {
+  color: var(--paper);
+  border-color: rgba(239, 237, 232, 0.68);
 }
 
 .button-arrow {
@@ -564,7 +589,16 @@ body.is-lightbox-open {
   text-transform: uppercase;
 }
 
-.imdb-link {
+.project-platform-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px clamp(18px, 3vw, 38px);
+  min-width: 0;
+}
+
+.imdb-link,
+.kinopoisk-film-link {
   display: inline-flex;
   align-items: center;
   gap: 16px;
@@ -577,14 +611,19 @@ body.is-lightbox-open {
 }
 
 .imdb-link:hover,
-.imdb-link:focus-visible {
+.imdb-link:focus-visible,
+.kinopoisk-film-link:hover,
+.kinopoisk-film-link:focus-visible {
   opacity: 0.72;
 }
 
-.imdb-link:focus-visible {
+.imdb-link:focus-visible,
+.kinopoisk-film-link:focus-visible {
   outline: 1px solid rgba(255, 255, 255, 0.72);
   outline-offset: 6px;
 }
+
+.kinopoisk-film-link { min-height: 24px; }
 
 .imdb-link img {
   width: 76px;
@@ -1548,9 +1587,10 @@ body.is-lightbox-open {
   to { opacity: 1; transform: translateY(-43%); }
 }
 
-@keyframes image-parallax {
-  from { transform: scale(1.005); }
-  to { transform: scale(1.11); }
+@keyframes portrait-crossfade {
+  from, to { opacity: 0; }
+  /* Full color 5 seconds into the 13-second cycle. */
+  38.461538% { opacity: 1; }
 }
 
 @keyframes role-glitch-main {
@@ -1621,7 +1661,6 @@ body.is-lightbox-open {
     width: 116%;
     height: 122%;
     object-position: 72% center;
-    filter: var(--portrait-filter) !important;
   }
 
   .hero-overlay {
@@ -1673,7 +1712,7 @@ body.is-lightbox-open {
   .hero-content {
     top: auto;
     right: 24px;
-    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(18px + var(--kinopoisk-button-gap) + var(--kinopoisk-button-height) + env(safe-area-inset-bottom, 0px));
     left: 24px;
     width: auto;
     transform: none;
@@ -1723,6 +1762,7 @@ body.is-lightbox-open {
   }
 
   .button-primary, .button-secondary { flex: none; }
+  .button-kinopoisk { height: var(--kinopoisk-button-height); }
   .scroll-cue, .hero-caption { display: none; }
   .works-section { min-height: 100vh; padding: 90px 24px 80px; }
   .works-heading { display: block; padding-bottom: 24px; }
@@ -1768,7 +1808,8 @@ body.is-lightbox-open {
     font-size: 9px;
     letter-spacing: 0.22em;
   }
-  .imdb-link {
+  .imdb-link,
+  .kinopoisk-film-link {
     gap: 12px;
     font-size: 10px;
     letter-spacing: 0.14em;
@@ -1917,7 +1958,6 @@ html.real-mobile .hero-image {
   width: 116%;
   height: 122%;
   object-position: 72% center;
-  filter: var(--portrait-filter) !important;
 }
 
 html.real-mobile .hero-overlay {
@@ -1969,7 +2009,7 @@ html.real-mobile .site-nav a {
 html.real-mobile .hero-content {
   top: auto;
   right: 24px;
-  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(18px + var(--kinopoisk-button-gap) + var(--kinopoisk-button-height) + env(safe-area-inset-bottom, 0px));
   left: 24px;
   width: auto;
   transform: none;
@@ -2021,6 +2061,8 @@ html.real-mobile .button {
   font-size: 10px;
   letter-spacing: 0.16em;
 }
+
+html.real-mobile .button-kinopoisk { height: var(--kinopoisk-button-height); }
 
 @media (max-width: 767px) {
   .project-gallery-card {
@@ -2309,7 +2351,8 @@ html.real-mobile .theatre-gallery-card .gallery-label-hint {
   display: block;
 }
 
-html.real-mobile .imdb-link {
+html.real-mobile .imdb-link,
+html.real-mobile .kinopoisk-film-link {
   gap: 12px;
   font-size: 10px;
   letter-spacing: 0.14em;
@@ -2577,9 +2620,8 @@ html.real-mobile .footer-line span:nth-child(2) {
     display: none !important;
   }
 
-  .hero-image {
+  .hero-image--color {
     animation: none !important;
-    transform: scale(1.005) !important;
   }
 
   .hero-content h1 span {

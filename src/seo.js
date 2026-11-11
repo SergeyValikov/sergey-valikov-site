@@ -1,4 +1,4 @@
-import { copy } from './content.js'
+import { copy, kinopoiskPersonUrl } from './content.js'
 import { languagePaths } from './i18n.js'
 
 export const siteUrl = 'https://sergeyvalikov.com/'
@@ -47,7 +47,7 @@ export function pageMetadata(language) {
         '@type': 'CollegeOrUniversity',
         name: language === 'en' ? 'Boris Shchukin Theatre Institute' : 'Театральный институт имени Бориса Щукина',
       },
-      sameAs: ['https://t.me/sergeyvalikov'],
+      sameAs: ['https://t.me/sergeyvalikov', kinopoiskPersonUrl],
     },
   }
 }

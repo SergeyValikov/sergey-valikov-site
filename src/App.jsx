@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { copy } from './content.js'
+import { copy, kinopoiskPersonUrl } from './content.js'
 import { languagePaths } from './i18n.js'
 import { applyPageMetadata } from './seo.js'
 import './App.css'
@@ -42,6 +42,7 @@ const cinemaProjects = [
     trailer: '/works/conductor-trailer.mp4',
     trailerPoster: '/works/conductor-trailer-preview.png',
     imdbUrl: 'https://www.imdb.com/title/tt39178320/?ref_=fn_t_10',
+    kinopoiskUrl: 'https://www.kinopoisk.ru/film/14275922/',
   },
   {
     title: '13:7',
@@ -276,6 +277,12 @@ function CTAButtons({ t }) {
         </svg>
       </a>
       <a className="button button-secondary" href="#contact">{t.contactButton}</a>
+      <a className="button button-kinopoisk" href={kinopoiskPersonUrl} target="_blank" rel="noreferrer">
+        {t.kinopoisk}
+        <svg className="button-arrow" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M4 12 12 4M6 4H12V10" />
+        </svg>
+      </a>
     </div>
   )
 }
@@ -300,7 +307,8 @@ function HeroOverlay() {
 function Hero({ language, onLanguageChange, t }) {
   return (
     <section className="hero" id="top" aria-label={t.heroLabel}>
-      <img className="hero-image" src="/portraits/sergey-valikov-hero.jpg" alt={t.portraitAlt} />
+      <img className="hero-image" src="/portraits/sergey-valikov-hero.jpg" alt={t.portraitAlt} draggable={false} />
+      <img className="hero-image hero-image--color" src="/portraits/sergey-valikov-hero-color.jpg" alt="" draggable={false} />
       <HeroOverlay />
       <Header language={language} onLanguageChange={onLanguageChange} t={t} />
       <HeroContent t={t} />
@@ -340,10 +348,15 @@ function CinemaProjects({ t, isActive }) {
 
               <div className="project-links">
                 <p>{project.title} / IMDb</p>
-                <a className="imdb-link" href={project.imdbUrl} target="_blank" rel="noreferrer">
-                  <img src="/works/imdb-logo.webp" alt="" />
-                  <span>{t.openProjectImdb}</span>
-                </a>
+                <div className="project-platform-links">
+                  <a className="imdb-link" href={project.imdbUrl} target="_blank" rel="noreferrer">
+                    <img src="/works/imdb-logo.webp" alt="" />
+                    <span>{t.openProjectImdb}</span>
+                  </a>
+                  <a className="kinopoisk-film-link" href={project.kinopoiskUrl} target="_blank" rel="noreferrer">
+                    {t.kinopoisk}
+                  </a>
+                </div>
               </div>
 
               <div className="project-trailer">

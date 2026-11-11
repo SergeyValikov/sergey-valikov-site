@@ -78,7 +78,7 @@ for (const language of ['ru', 'en']) {
     assert.equal(schema.url, canonical)
     assert.equal(schema.name, copy[language].footerName)
     assert.equal(schema.description, copy[language].aboutParagraphs.slice(0, 2).join(' '))
-    assert.deepEqual(schema.sameAs, ['https://t.me/sergeyvalikov'])
+    assert.deepEqual(schema.sameAs, ['https://t.me/sergeyvalikov', 'https://www.kinopoisk.ru/name/10457388/'])
     assert.equal(schema.award, undefined)
     assert.equal(schema.birthDate, undefined)
     assert.equal(schema.nationality, undefined)

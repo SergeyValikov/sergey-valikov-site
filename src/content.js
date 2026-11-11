@@ -1,3 +1,5 @@
+export const kinopoiskPersonUrl = 'https://www.kinopoisk.ru/name/10457388/'
+
 export const copy = {
   ru: {
     pageTitle: 'Сергей Валиков — режиссёр | Официальный сайт',
@@ -13,6 +15,7 @@ export const copy = {
     heroLabel: 'Сергей Валиков — режиссёр',
     worksButton: 'Работы',
     contactButton: 'Связаться',
+    kinopoisk: 'Кинопоиск',
     authorView: 'Авторский взгляд',
     next: 'далее',
     nextLabel: 'Перейти к работам',
@@ -98,6 +101,7 @@ export const copy = {
     heroLabel: 'Sergey Valikov — Director',
     worksButton: 'Works',
     contactButton: 'Contact',
+    kinopoisk: 'Kinopoisk',
     authorView: "Author's view",
     next: 'next',
     nextLabel: 'Go to works',
