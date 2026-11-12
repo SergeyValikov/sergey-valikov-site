@@ -354,7 +354,8 @@ function CinemaProjects({ t, isActive }) {
                     <span>{t.openProjectImdb}</span>
                   </a>
                   <a className="kinopoisk-film-link" href={project.kinopoiskUrl} target="_blank" rel="noreferrer">
-                    {t.kinopoisk}
+                    <img src="/works/kinopoisk-logo.webp" alt="" width="57" height="57" loading="lazy" />
+                    <span>{t.kinopoisk}</span>
                   </a>
                 </div>
               </div>

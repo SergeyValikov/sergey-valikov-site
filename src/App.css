@@ -590,10 +590,12 @@ body.is-lightbox-open {
 }
 
 .project-platform-links {
+  /* Match the visible edge of the IMDb badge when the links wrap. */
+  --kinopoisk-logo-inset: 10.4px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px clamp(18px, 3vw, 38px);
+  gap: 10px calc(clamp(18px, 3vw, 38px) - var(--kinopoisk-logo-inset));
   min-width: 0;
 }
 
@@ -625,11 +627,17 @@ body.is-lightbox-open {
 
 .kinopoisk-film-link { min-height: 24px; }
 
-.imdb-link img {
-  width: 76px;
+.imdb-link img,
+.kinopoisk-film-link img {
   height: auto;
   display: block;
   border-radius: 3px;
+}
+
+.imdb-link img { width: 76px; }
+.kinopoisk-film-link img {
+  width: 57px;
+  margin-inline-start: var(--kinopoisk-logo-inset);
 }
 
 .project-trailer {
@@ -1808,6 +1816,7 @@ body.is-lightbox-open {
     font-size: 9px;
     letter-spacing: 0.22em;
   }
+  .project-platform-links { --kinopoisk-logo-inset: 8px; }
   .imdb-link,
   .kinopoisk-film-link {
     gap: 12px;
@@ -1816,6 +1825,9 @@ body.is-lightbox-open {
   }
   .imdb-link img {
     width: 58px;
+  }
+  .kinopoisk-film-link img {
+    width: 43.5px;
   }
   .theatre-project-body {
     grid-template-columns: 1fr;
@@ -2351,6 +2363,8 @@ html.real-mobile .theatre-gallery-card .gallery-label-hint {
   display: block;
 }
 
+html.real-mobile .project-platform-links { --kinopoisk-logo-inset: 8px; }
+
 html.real-mobile .imdb-link,
 html.real-mobile .kinopoisk-film-link {
   gap: 12px;
@@ -2360,6 +2374,10 @@ html.real-mobile .kinopoisk-film-link {
 
 html.real-mobile .imdb-link img {
   width: 58px;
+}
+
+html.real-mobile .kinopoisk-film-link img {
+  width: 43.5px;
 }
 
 html.real-mobile .theatre-project-body {
